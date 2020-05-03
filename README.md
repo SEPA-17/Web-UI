@@ -38,6 +38,13 @@ An overview of our development pipeline and workflow.
 * The virtualenv package. This is used to create an environment used to develop and test your application, so that the environment can be replicated by Elastic Beanstalk without installing extra packages that aren't needed by your application. A Virtual Environment, put simply, is an isolated working copy of Python which
 allows you to work on a specific project without affecting other projects.
 
+### Git Workflow. 
+Notes on the Git workflow for this project can be found here: <https://www.atlassian.com/git/tutorials/comparing-workflows/gitflow-workflow>.   
+Broadly, avoid pushing features directly into the *master* branch. Fork the *development* branch, do your work, then merge back into *development*, which will then in turn be periodically merged into *master*.   
+See the following diagram: 
+![Git Workflow](readme-resources/git.png?raw=true "git")
+
+
 ### Getting Started: 
 
 Current URL of our Web UI: <http://web-app.eba-xee4gc2x.ap-southeast-2.elasticbeanstalk.com/>
