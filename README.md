@@ -52,13 +52,36 @@ Current URL of our Web UI: <http://web-app.eba-xee4gc2x.ap-southeast-2.elasticbe
       * `~$ source ~/eb-virt/bin/activate`
       * `(eb-virt)~$ pip install -r requirements.txt`
     * For Windows: 
-      * `C:\> virtualenv %HOMEPATH%\eb-virt`
-      * `C:\>%HOMEPATH%\eb-virt\Scripts\activate `
-      * `(eb-virt) C:\>pip install -r requirements.txt`
+      * `C:\Web-UI> virtualenv eb-virt`
+      * `C:\Web-UI> eb-virt\Scripts\activate `
+      * `(eb-virt) C:\Web-UI>pip install -r requirements.txt`
 * These commands will start an isolated virtualenv named *eb-virt*
 * Activate the virtualenv
-* Install the dependencies listed in requirements.txt into the virtualenv. 
+* Install the dependencies listed in requirements.txt into the virtualenv.
 
+* Database
+    * Setup local environment
+      -  Go to `Web-UI/ebdjango/`
+      - Create a py file `local_settings.py`, change user, password...
+        ```python
+            DEBUG = True
+            DATABASES = {
+                'default': {
+                    'ENGINE': 'django.db.backends.mysql',
+                    'NAME': 'meterdb-dev',
+                    'USER': 'root',
+                    'PASSWORD': 'root',
+                    'HOST': '127.0.0.1',
+                    'PORT': '3306'
+                }
+            }
+        ```
+    * First time run, if you don't have these tables: Meter, MeterData and ServiceArea in MySql database
+        - Run migration, this will create tables for you
+            - Go to project root `Web-UI`, run migrate
+                - `python manage.py migrate`
+    * More info see "setttings.py"
+            
 Following this, you are now free to develop on your local machine.
 After you have made some changes, you must *test them locally* before committing them to Github. To do this, you need to start a local webserver so you can view the application on your browser. 
 
