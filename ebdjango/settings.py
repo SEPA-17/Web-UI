@@ -15,7 +15,6 @@ import os
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
-
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/2.1/howto/deployment/checklist/
 
@@ -23,10 +22,9 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 SECRET_KEY = ')^f1a(5z4-bo=^i(@zf3!l4e4)2&b8f4$x8nw@4dfw(2!*#nbv'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False
 
-ALLOWED_HOSTS = ['web-app.eba-xee4gc2x.ap-southeast-2.elasticbeanstalk.com']
-
+ALLOWED_HOSTS = ['web-app.eba-xee4gc2x.ap-southeast-2.elasticbeanstalk.com', 'localhost', '127.0.0.1']
 
 # Application definition
 
@@ -37,6 +35,7 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'webapp.apps.WebappConfig'
 ]
 
 MIDDLEWARE = [
@@ -69,16 +68,11 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'ebdjango.wsgi.application'
 
-
 # Database
 # https://docs.djangoproject.com/en/2.1/ref/settings/#databases
 
-DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
-    }
-}
+# Production MySql Database
+# Should not change, see local_settings.py
 
 
 # Password validation
@@ -99,7 +93,6 @@ AUTH_PASSWORD_VALIDATORS = [
     },
 ]
 
-
 # Internationalization
 # https://docs.djangoproject.com/en/2.1/topics/i18n/
 
@@ -113,8 +106,14 @@ USE_L10N = True
 
 USE_TZ = True
 
-
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/2.1/howto/static-files/
 
 STATIC_URL = '/static/'
+LOGIN_REDIRECT_URL = 'home'
+LOGIN_URL = 'login'
+
+try:
+    from ebdjango.local_settings import *
+except ImportError:
+    pass
