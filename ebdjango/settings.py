@@ -25,7 +25,7 @@ SECRET_KEY = ')^f1a(5z4-bo=^i(@zf3!l4e4)2&b8f4$x8nw@4dfw(2!*#nbv'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['web-app.eba-xee4gc2x.ap-southeast-2.elasticbeanstalk.com']
+ALLOWED_HOSTS = ['web-app.eba-xee4gc2x.ap-southeast-2.elasticbeanstalk.com', 'localhost', '127.0.0.1']
 
 
 # Application definition
@@ -37,6 +37,7 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'webapp.apps.WebappConfig'
 ]
 
 MIDDLEWARE = [
