@@ -27,10 +27,10 @@ An overview of our development pipeline and workflow.
   * A quick overview of Docker: <https://docker-curriculum.com/>
 
 * MySQL
-    * You must download and install MySQL Community Server 5.7 here: <https://dev.mysql.com/downloads/mysql/5.7.html>
-        * tutorial for windows 10: <https://blog.zedfox.us/install-mysql-5-7-windows-10/>
-	   * tutorial for OSX: <https://gist.github.com/nrollr/3f57fc15ded7dddddcc4e82fe137b58e>
-  * *NOTE: For local development, you will need a Database Client such as MySQL Workbench, TablePlus, or Sequel Pro. Download and install whichever client you like best. (I like workbench and Tableplus).*
+  * We will be using a Docker container to run the Web UI MySQL database locally. However, for the Socket Server, you might need to download and install MySQL Community Server 5.7 here: <https://dev.mysql.com/downloads/mysql/5.7.html>
+      * tutorial for windows 10: <https://blog.zedfox.us/install-mysql-5-7-windows-10/>  
+      * tutorial for OSX: <https://gist.github.com/nrollr/3f57fc15ded7dddddcc4e82fe137b58e>  
+  * **NOTE: For local development, you will need a Database Client such as MySQL Workbench, TablePlus, or Sequel Pro. Download and install whichever client you like best. This will allow you to visualise your local database, as well as connect to the database's hosted in AWS. (I like workbench and Tableplus).*
 
 * Python 3.6
  
@@ -49,10 +49,8 @@ See the following diagram:
 
 Current URL of our Web UI: <http://web-app.eba-xee4gc2x.ap-southeast-2.elasticbeanstalk.com/>
 
-* Create a directory on your local machine named "Web-UI"
-* Navigate to the newly created directory before cloning the the github repository. 
-    * `git clone https://github.com/SEPA-17/Web-UI.git`
-* Open the repository in your IDE, then *ensure you're are working on the development branch*.
+* Clone or fork the *development* branch of this repository (SEPA-17/Web-UI).
+* Open the repository in your IDE.
 * Run the following commands in a shell to create and run an isolated Python development environment, then install the dependencies required to run our Django web application.
     * For Unix based Systems: 
       * `~$ virtualenv ~/eb-virt`
@@ -66,27 +64,13 @@ Current URL of our Web UI: <http://web-app.eba-xee4gc2x.ap-southeast-2.elasticbe
 * Activate the virtualenv
 * Install the dependencies listed in requirements.txt into the virtualenv.
 
-* Database
-    * Setup local environment
-      -  Go to `Web-UI/ebdjango/`
-      - Create a py file `local_settings.py`, change user, password...
-        ```python
-            DEBUG = True
-            DATABASES = {
-                'default': {
-                    'ENGINE': 'django.db.backends.mysql',
-                    'NAME': 'meterdb-dev',
-                    'USER': 'root',
-                    'PASSWORD': 'root',
-                    'HOST': '127.0.0.1',
-                    'PORT': '3306'
-                }
-            }
-        ```
-    * First time run, if you don't have these tables: Meter, MeterData and ServiceArea in MySql database
-        - Run migration, this will create tables for you
-            - Go to project root `Web-UI`, run migrate
-                - `python manage.py migrate`
+* Setting up your MySQL Database for local development. (You will need Docker. See prerequisites above).
+  * The following will start a MySQL Docker container for your web app to use on your local machine.
+  * Clone the SEPA-17/mysql-docker repository here: <https://github.com/SEPA-17/mysql-docker>
+  * Follow the steps in the mysql-docker README.md to compose and run the MySQL container. 
+  * Once it's up and running, run a Django migration, this will create the tables you need.
+     - Go to project root `Web-UI`, run migrate
+          - `python manage.py migrate`
     * More info see "setttings.py"
             
 Following this, you are now free to develop on your local machine.
