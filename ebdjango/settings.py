@@ -19,10 +19,10 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 # See https://docs.djangoproject.com/en/2.1/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = ')^f1a(5z4-bo=^i(@zf3!l4e4)2&b8f4$x8nw@4dfw(2!*#nbv'
+SECRET_KEY = os.environ.get('SECRET_KEY',')^f1a(5z4-bo=^i(@zf3!l4e4)2&b8f4$x8nw@4dfw(2!*#nbv')
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = False
+DEBUG = os.environ.get('DEBUG', False)
 
 ALLOWED_HOSTS = ['web-app.eba-xee4gc2x.ap-southeast-2.elasticbeanstalk.com', 'localhost', '127.0.0.1']
 
@@ -77,11 +77,11 @@ WSGI_APPLICATION = 'ebdjango.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
-        'NAME': os.environ['RDS_DB_NAME'],
-        'USER': os.environ['RDS_USERNAME'],
-        'PASSWORD': os.environ['RDS_PASSWORD'],
-        'HOST': os.environ['RDS_HOSTNAME'],
-        'PORT': os.environ['RDS_PORT'],
+        'NAME': os.environ.get('RDS_DB_NAME', 'meterdb-dev'),
+        'USER': os.environ.get('RDS_USERNAME', 'root'),
+        'PASSWORD': os.environ.get('RDS_PASSWORD', 'root'),
+        'HOST': os.environ.get('RDS_HOSTNAME', '127.0.0.1'),
+        'PORT': os.environ.get('RDS_PORT', 3306)
     }
 }
 
@@ -123,8 +123,3 @@ USE_TZ = True
 STATIC_URL = '/static/'
 LOGIN_REDIRECT_URL = 'home'
 LOGIN_URL = 'login'
-
-try:
-    from ebdjango.local_settings import *
-except ImportError:
-    pass
