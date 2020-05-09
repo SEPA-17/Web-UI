@@ -1,0 +1,80 @@
+{% extends "webapp/base.html" %}
+{% block content %}
+<div class="content-section">
+    <h2>Meter Data</h2>
+    <table class="table">
+        <thead class="thead-light">
+        <tr>
+            <th scope="col">MeterId</th>
+            <th scope="col">ReadAt</th>
+            <th scope="col">KwH</th>
+            <th scope="col">KW</th>
+            <th scope="col">KvA</th>
+            <th scope="col">KvAr</th>
+            <th scope="col">Ph1i</th>
+            <th scope="col">Ph2i</th>
+            <th scope="col">Ph3i</th>
+            <th scope="col">Ph1v</th>
+            <th scope="col">Ph2v</th>
+            <th scope="col">Ph3v</th>
+            <th scope="col">PF</th>
+        </tr>
+        </thead>
+        <tbody>
+        {% for data in meterdata %}
+        <tr>
+            <td>{{ data.MeterId }}</td>
+            <td>{{ data.ReadAt }}</td>
+            <td>{{ data.KWH }}</td>
+            <td>{{ data.KW }}</td>
+            <td>{{ data.KVA }}</td>
+            <td>{{ data.KVAr }}</td>
+            <td>{{ data.Ph1i }}</td>
+            <td>{{ data.Ph2i }}</td>
+            <td>{{ data.Ph3i }}</td>
+            <td>{{ data.Ph1v }}</td>
+            <td>{{ data.Ph2v }}</td>
+            <td>{{ data.Ph3v }}</td>
+            <td>{{ data.PF }}</td>
+        </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    {% if is_paginated and page_obj.paginator.num_pages > 1 %}
+        <ul class="pagination">
+            {% if page_obj.has_previous %}
+                <li class="page-item">
+                    <a class="page-link" href="?page={{ page_obj.previous_page_number }}" tabindex="-1" aria-disabled="true">Previous</a>
+                </li>
+            {% else %}
+                <li class="disabled"><span class="page-link">Previous</span></li>
+            {% endif %}
+
+            {% if page_obj.number|add:'-4' > 1 %}
+                <li class="page-item"><a class="page-link" href="?page={{ page_obj.number|add:'-5' }}">&hellip;</a></li>
+            {% endif %}
+
+            {% for i in page_obj.paginator.page_range %}
+                {% if page_obj.number == i %}
+                    <li class="page-item active"><span class="page-link">{{ i }} <span class="sr-only">(current)</span></span></li>
+                {% elif i > page_obj.number|add:'-5' and i < page_obj.number|add:'5' %}
+                    <li class="page-item"><a class="page-link" href="?page={{ i }}">{{ i }}</a></li>
+                {% endif %}
+            {% endfor %}
+
+            {% if page_obj.paginator.num_pages > page_obj.number|add:'4' %}
+                <li class="page-item"><a class="page-link" href="?page={{ page_obj.number|add:'5' }}">&hellip;</a></li>
+            {% endif %}
+
+            {% if page_obj.has_next %}
+                <li class="page-item">
+                    <a class="page-link" href="?page={{ page_obj.next_page_number }}">Next</a>
+                </li>
+            {% else %}
+                <li class="disabled"><span class="page-link">Next</span></li>
+            {% endif %}
+        </ul>
+    {% endif %}
+</div>
+{% endblock content %}

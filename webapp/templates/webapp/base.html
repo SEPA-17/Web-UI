@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     {% if title %}
-        <title>Zodicom Meter Data - {{ title }}</title>
+        <title>Zodicom - {{ title }}</title>
     {% else %}
         <title>Zodicom Meter Data</title>
     {% endif %}
@@ -18,7 +18,7 @@
     <header class="site-header">
       </header>
       <main role="main" class="container" id="mainContainer">
-        <div class="row">
+        <div>
           {% if messages %}
               {% for message in messages %}
                 <div class="alert alert-{{message.tags}}">
@@ -26,6 +26,7 @@
                 </div>
               {% endfor %}
             {% endif %}
+            <!-- content -->
             {% block content %}{% endblock %}
         </div>
       </main>
