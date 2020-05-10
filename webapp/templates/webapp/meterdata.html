@@ -2,6 +2,50 @@
 {% block content %}
 <div class="content-section">
     <h2>Meter Data</h2>
+    <div>
+        <form action="{% url 'meterdata' %}" method="GET">
+            <div class="form-row row">
+                <div class="col-sm-12 col-md-8">
+                    <div class="form-row row">
+                        <div class="form-group col-md-2 text-md-right">
+                            <label>Read at:</label>
+                        </div>
+                        <div class="form-group col-md-5">
+                            <div class="input-group date" id="fromDateTimePicker" data-target-input="nearest">
+                                <input type="text" class="form-control datetimepicker-input" data-target="#fromDateTimePicker" name="fromDate" placeholder="From Date" value="{{ fromDate }}"/>
+                                <div class="input-group-append" data-target="#fromDateTimePicker" data-toggle="datetimepicker">
+                                    <div class="input-group-text"><i class="fa fa-calendar"></i></div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group col-md-5">
+                            <div class="input-group date" id="toDateTimePicker" data-target-input="nearest">
+                                <input type="text" class="form-control datetimepicker-input" data-target="#toDateTimePicker" name="toDate" placeholder="To Date" value="{{ toDate }}"/>
+                                <div class="input-group-append" data-target="#toDateTimePicker" data-toggle="datetimepicker">
+                                    <div class="input-group-text"><i class="fa fa-calendar"></i></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-sm-12 col-md-4">
+                    <div class="form-row row">
+                        <div class="form-group col-md-3 text-md-right">
+                            <label>Meter Id:</label>
+                        </div>
+                        <div class="form-group col-md-5">
+                            <input type="text" class="form-control" name="meterId" value="{{ meterId }}" />
+                        </div>
+                        <div class="form-group col-md-4">
+                            <input type="submit" value="Filter" />
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <input type="hidden" name="page" value="1">
+        </form>
+
+    </div>
     <table class="table">
         <thead class="thead-light">
         <tr>
@@ -24,7 +68,7 @@
         {% for data in meterdata %}
         <tr>
             <td>{{ data.MeterId }}</td>
-            <td>{{ data.ReadAt }}</td>
+            <td>{{ data.ReadAt|date:"d/m/Y H:i:s" }}</td>
             <td>{{ data.KWH }}</td>
             <td>{{ data.KW }}</td>
             <td>{{ data.KVA }}</td>
@@ -37,6 +81,8 @@
             <td>{{ data.Ph3v }}</td>
             <td>{{ data.PF }}</td>
         </tr>
+        {% empty %}
+            <tr><td colspan="15">No result found</td></tr>
         {% endfor %}
         </tbody>
     </table>
@@ -45,31 +91,31 @@
         <ul class="pagination">
             {% if page_obj.has_previous %}
                 <li class="page-item">
-                    <a class="page-link" href="?page={{ page_obj.previous_page_number }}" tabindex="-1" aria-disabled="true">Previous</a>
+                    <a class="page-link" href="?page={{ page_obj.previous_page_number }}{{ requestUrl }}" tabindex="-1" aria-disabled="true">Previous</a>
                 </li>
             {% else %}
                 <li class="disabled"><span class="page-link">Previous</span></li>
             {% endif %}
 
             {% if page_obj.number|add:'-4' > 1 %}
-                <li class="page-item"><a class="page-link" href="?page={{ page_obj.number|add:'-5' }}">&hellip;</a></li>
+                <li class="page-item"><a class="page-link" href="?page={{ page_obj.number|add:'-5' }}{{ requestUrl }}">&hellip;</a></li>
             {% endif %}
 
             {% for i in page_obj.paginator.page_range %}
                 {% if page_obj.number == i %}
                     <li class="page-item active"><span class="page-link">{{ i }} <span class="sr-only">(current)</span></span></li>
                 {% elif i > page_obj.number|add:'-5' and i < page_obj.number|add:'5' %}
-                    <li class="page-item"><a class="page-link" href="?page={{ i }}">{{ i }}</a></li>
+                    <li class="page-item"><a class="page-link" href="?page={{ i }}{{ requestUrl }}">{{ i }}</a></li>
                 {% endif %}
             {% endfor %}
 
             {% if page_obj.paginator.num_pages > page_obj.number|add:'4' %}
-                <li class="page-item"><a class="page-link" href="?page={{ page_obj.number|add:'5' }}">&hellip;</a></li>
+                <li class="page-item"><a class="page-link" href="?page={{ page_obj.number|add:'5' }}{{ requestUrl }}">&hellip;</a></li>
             {% endif %}
 
             {% if page_obj.has_next %}
                 <li class="page-item">
-                    <a class="page-link" href="?page={{ page_obj.next_page_number }}">Next</a>
+                    <a class="page-link" href="?page={{ page_obj.next_page_number }}{{ requestUrl }}">Next</a>
                 </li>
             {% else %}
                 <li class="disabled"><span class="page-link">Next</span></li>
@@ -78,3 +124,16 @@
     {% endif %}
 </div>
 {% endblock content %}
+
+{% block bodyscript %}
+    <script type="text/javascript">
+            $(function () {
+                $('#fromDateTimePicker').datetimepicker({
+                    format: 'DD/MM/YYYY HH:mm:ss'
+                });
+                $('#toDateTimePicker').datetimepicker({
+                    format: 'DD/MM/YYYY HH:mm:ss'
+                });
+            });
+    </script>
+{% endblock bodyscript %}
