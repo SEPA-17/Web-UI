@@ -8,7 +8,7 @@ class Meter(models.Model):
                                null=True)
 
     def __str__(self):
-        return self.MeterId
+        return str(self.MeterId).zfill(8)
 
     class Meta:
         db_table = "Meter"

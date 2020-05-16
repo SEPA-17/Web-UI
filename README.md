@@ -58,7 +58,7 @@ Current URL of our Web UI: <http://web-app.eba-xee4gc2x.ap-southeast-2.elasticbe
       * `(eb-virt)~$ pip install -r requirements.txt`
     * For Windows: 
       * `C:\Web-UI> virtualenv eb-virt`
-      * `C:\Web-UI> eb-virt\Scripts\activate `
+      * `C:\Web-UI> .\eb-virt\Scripts\activate `
       * `(eb-virt) C:\Web-UI>pip install -r requirements.txt`
 * These commands will start an isolated virtualenv named *eb-virt*
 * Activate the virtualenv
