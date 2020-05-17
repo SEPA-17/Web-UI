@@ -2,7 +2,6 @@ from urllib.parse import urlencode
 from django.views.generic import ListView
 from django.views.generic.edit import FormMixin
 from ..models import MeterData
-from ..forms.meter_filter_form import MeterFilterForm
 from ..helper import parse_date_to_iso
 
 
@@ -13,7 +12,6 @@ class MeterDataView(FormMixin, ListView):
     context_object_name = 'meterdata'
     # ordering = ['-ReadAt']
     paginate_by = 10
-    form_class = MeterFilterForm
     requestUrl = {}
 
     def dispatch(self, request, *args, **kwargs):
