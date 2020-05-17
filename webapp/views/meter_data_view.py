@@ -1,11 +1,10 @@
 from urllib.parse import urlencode
 from django.views.generic import ListView
-from django.views.generic.edit import FormMixin
 from ..models import MeterData
 from ..helper import parse_date_to_iso
 
 
-class MeterDataView(FormMixin, ListView):
+class MeterDataView(ListView):
     title = 'MeterData'
     template_name = 'webapp/meterdata.html'
     model = MeterData
