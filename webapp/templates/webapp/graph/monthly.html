@@ -1,15 +1,72 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Zodicom mon</title>
-</head>
-<body>
-    <div>
-        <h2>Monthly Graph</h2>
+{% extends "webapp/base.html" %}
+{% load static %}
+{% block content %}
+    <div class="content-section">
+        <div>
+            <h2>Monthly Graph</h2>
+        </div>
+        <div class="row">
+            <div class="col-md-8">
+                <div class="graph-group">
+                    <img id="imgGraph" src="{% url 'graph-monthly-png' %}?meterId={{ meterId }}" alt="Meter graph"/>
+                    <div id="loadingMask" class="loading-mask">
+                        <img src="{% static 'img/loading.gif' %}" alt="loading" />
+                    </div>
+                </div>
+            </div>
+            <div>
+                <form id="frmGraphFilter" action="{% url 'graph-monthly' %}" method="GET" class="form" onsubmit="showFilterGraph(); return false;" >
+                    <div class="form-group">
+                        <label for="meterId" name="meterId">Meter Id:</label>
+                        <input type="text" id="meterId" name="meterId" class="form-control" value="{{ meterId }}" required="required" />
+                    </div>
+                </form>
+            </div>
+        </div>
     </div>
-    <div>
-        <img src="http://localhost:8000/graph/monthly.png" />
-    </div>
-</body>
-</html>
+{% endblock content %}
+
+{% block bodyscript %}
+    <script type="text/javascript">
+        var graphUrl = "{% url 'graph-monthly' %}";
+        var imageUrl = "{% url 'graph-monthly-png' %}";
+
+        $(document).ready(function() {
+            showLoading(true);
+            var img = document.getElementById("imgGraph");
+            img.onload = function() {
+                showLoading(false);
+            }
+        }) ;
+
+        function showFilterGraph() {
+            var frm = document.getElementById("frmGraphFilter");
+            if (!frm && !frm.meterId) return;
+            var meterId = frm.meterId.value;
+            showLoading(true);
+            loadGraph(meterId);
+        }
+
+        function loadGraph(meterId) {
+            var newUrl = graphUrl + "?meterId=" + meterId;
+            var newImageUrl = imageUrl + "?meterId=" + meterId;
+            var img = document.getElementById("imgGraph");
+            img.src = newImageUrl;
+
+            if (window.history.replaceState) {
+                window.history.replaceState('', '', newUrl);
+            }
+        }
+
+        function showLoading(show) {
+            var loading = document.getElementById("loadingMask");
+            if (!loading) return;
+            if (show) {
+                $(loading).css("display", "block");
+            } else {
+                $(loading).css("display", "none");
+            }
+        }
+
+    </script>
+{% endblock bodyscript %}

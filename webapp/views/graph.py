@@ -1,23 +1,36 @@
-import datetime
+import time
 import io
 from django.shortcuts import render
 from django.http import HttpResponse
 import matplotlib.pyplot as plt
 from matplotlib.figure import Figure
-from matplotlib.dates import DateFormatter
 from matplotlib.backends.backend_agg import FigureCanvasAgg as FigureCanvas
 
 from webapp.models.total_kw_monthly import TotalKwMonthly
 
 def monthly(request):
-    return render(request, 'webapp/graph/monthly.html')
+    if request.GET.get('meterId'):
+        meterId = request.GET['meterId']
+    else:
+        meterId = 0;
+    return render(request, 'webapp/graph/monthly.html', {'meterId': meterId})
 
 def monthly_png(request):
+    time.sleep(3);
+    meterId = 0;
+    year = 2017;
 
-    meterid = 98801006
-    year = 2017
+    if request.GET.get('meterId'):
+        meterId = request.GET['meterId']
+    else:
+        return graph_not_found()
 
-    data = TotalKwMonthly.objects.filter(meter_id=meterid, read_year=year).order_by('read_year', 'read_month')
+    if request.GET.get('year'):
+        year = request.GET['year']
+
+    data = TotalKwMonthly.objects.filter(meter_id=meterId, read_year=year).order_by('read_year', 'read_month')
+    if not data:
+        return graph_not_found()
 
     month_kw = data.values_list('read_month', 'total_kw')
     month, kw = zip(*month_kw)
@@ -113,3 +126,8 @@ def monthly_bck(request):
 
 def yearly(request):
     return render(request, 'webapp/graph/yearly.html')
+
+
+def graph_not_found():
+    with open("webapp/static/img/graphnotfound.png", "rb") as img_file:
+        return HttpResponse(img_file.read(), content_type="image/png")
