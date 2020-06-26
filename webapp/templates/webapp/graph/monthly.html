@@ -2,32 +2,32 @@
 {% load static %}
 {% block content %}
     <div class="content-section">
-        <div>
-            <h2>Display Monthly Graph</h2>
-        </div>
-        <div class="row">
-            <div class="col-md-8">
-                <div class="graph-group">
-                    <img id="imgGraph" src="{% url 'graph-monthly-png' %}?meterId={{ meterId }}" alt="Meter graph"/>
-                    <div id="loadingMask" class="loading-mask">
-                        <img src="{% static 'img/loading.gif' %}" alt="loading" />
+        <h2>Display Monthly Graph</h2>
+        <div class="border-top pt-5">
+            <div class="row">
+                <div class="col-md-8">
+                    <div class="graph-group">
+                        <img id="imgGraph" src="{% url 'graph-monthly-png' %}?meterId={{ meterId }}" alt="Meter graph"/>
+                        <div id="loadingMask" class="loading-mask">
+                            <img src="{% static 'img/loading.gif' %}" alt="loading" />
+                        </div>
                     </div>
                 </div>
-            </div>
-            <div>
-                <form id="frmGraphFilter" action="{% url 'graph-monthly' %}" method="GET" class="form" onsubmit="showFilterGraph(); return false;" >
-                    <div class="form-group">
-                        <label for="meterId" name="meterId">Meter Id:</label>
-                        <input type="text" id="meterId" name="meterId" class="form-control" value="{{ meterId }}" required="required" />
-                    </div>
-                    <div class="form-group">
-                        <label for="year" name="year">Year:</label>
-                        <input type="text" id="year" name="year" class="form-control" value="{{ year }}" placeholder="2017"/>
-                    </div>
-                    <div class="form-group" style="text-align: right">
-                        <input type="submit" value="Show Graph" class="btn btn-primary" >
-                    </div>
-                </form>
+                <div>
+                    <form id="frmGraphFilter" action="{% url 'graph-monthly' %}" method="GET" class="form" onsubmit="showFilterGraph(); return false;" >
+                        <div class="form-group">
+                            <label for="meterId">Meter Id:</label>
+                            <input type="text" id="meterId" name="meterId" class="form-control" value="{{ meterId }}" required="required" />
+                        </div>
+                        <div class="form-group">
+                            <label for="year">Year:</label>
+                            <input type="text" id="year" name="year" class="form-control" value="{{ year }}" placeholder="2017"/>
+                        </div>
+                        <div class="form-group" style="text-align: right">
+                            <input type="submit" value="Show Graph" class="btn btn-primary" >
+                        </div>
+                    </form>
+                </div>
             </div>
         </div>
     </div>

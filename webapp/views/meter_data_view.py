@@ -1,4 +1,6 @@
 from urllib.parse import urlencode
+from django.contrib.auth.decorators import login_required
+from django.utils.decorators import method_decorator
 from django.views.generic import ListView
 from ..models import MeterData
 from ..helper import parse_date_to_iso
@@ -13,6 +15,7 @@ class MeterDataView(ListView):
     paginate_by = 10
     requestUrl = {}
 
+    @method_decorator(login_required)
     def dispatch(self, request, *args, **kwargs):
         self.requestUrl['meterId'] = self.request.GET.get('meterId', '')
         self.requestUrl['fromDate'] = self.request.GET.get('fromDate', '')
