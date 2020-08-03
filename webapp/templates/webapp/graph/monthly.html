@@ -7,17 +7,17 @@
             <div class="row">
                 <div class="col-md-8">
                     <div class="graph-group">
-                        <img id="imgGraph" src="{% url 'graph-monthly-png' %}?meterId={{ meterId }}" alt="Meter graph"/>
+                        <img id="imgGraph" src="{% url 'graph-monthly-png' %}?meterId={{ meterid }}" alt="Meter graph"/>
                         <div id="loadingMask" class="loading-mask">
                             <img src="{% static 'img/loading.gif' %}" alt="loading" />
                         </div>
                     </div>
                 </div>
                 <div>
-                    <form id="frmGraphFilter" action="{% url 'graph-monthly' %}" method="GET" class="form" onsubmit="showFilterGraph(); return false;" >
+                    <form id="frmGraphFilter" action="{% url 'graph-monthly' %}" method="GET" class="form" onsubmit="return showFilterGraph(event);" >
                         <div class="form-group">
                             <label for="meterId">Meter Id:</label>
-                            <input type="text" id="meterId" name="meterId" class="form-control" value="{{ meterId }}" required="required" />
+                            <input type="text" id="meterId" name="meterId" class="form-control" value="{{ meterid }}" required="required" />
                         </div>
                         <div class="form-group">
                             <label for="year">Year:</label>
@@ -46,17 +46,23 @@
             }
         }) ;
 
-        function showFilterGraph() {
+        function showFilterGraph(e) {
+            var evt = e || event;
+            if (evt) {
+                evt.preventDefault();
+            }
             var frm = document.getElementById("frmGraphFilter");
             if (!frm && !frm.meterId) return;
             var meterId = frm.meterId.value;
             var year = frm.year.value;
             showLoading(true);
             loadGraph(meterId, year);
+
+            return false;
         }
 
         function loadGraph(meterId, year) {
-            var newUrl = graphUrl + "?meterId=" + meterId;
+            var newUrl = graphUrl + "?meterid=" + meterId;
             var newImageUrl = imageUrl + "?meterId=" + meterId;
             if (year) {
                 newUrl += "&year=" + year;

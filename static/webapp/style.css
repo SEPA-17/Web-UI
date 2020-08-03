@@ -1,0 +1,38 @@
+body {
+
+}
+
+.graph-group {
+    display: block;
+    position: relative;
+    min-width: 600px;
+    min-height: 600px;
+    over-flow: hidden;
+    text-align: center;
+}
+
+.loading-mask {
+    background: rgba(0, 0, 0, .5);
+    vertical-align: middle;
+    text-align: center;
+    left: 0;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    position: absolute;
+    display: none;
+    width: 100%;
+    height: 100%;
+    margin: 0;
+    z-index: 999;
+}
+
+.loading-mask img {
+    border: none;
+    display: block;
+    margin: 0 auto;
+    vertical-align: middle;
+    top: 50%;
+    position: relative;
+}
+

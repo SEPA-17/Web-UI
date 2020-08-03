@@ -8,7 +8,7 @@ import matplotlib.pyplot as plt
 from matplotlib.figure import Figure
 from matplotlib.backends.backend_agg import FigureCanvasAgg as FigureCanvas
 
-from webapp.models.total_kw_monthly import TotalKwMonthly
+from webapp.models.meter_usage import MeterUsage
 
 
 # Render page
@@ -16,7 +16,8 @@ from webapp.models.total_kw_monthly import TotalKwMonthly
 def monthly(request):
     _meter_id = request.GET.get('meterid', 0)
     _year = request.GET.get('year', 2017)
-    return render(request, 'webapp/graph/monthly.html', {'meterId': _meter_id, 'year': _year})
+    # print(f"Request meter id={_meter_id}  year={_year}")
+    return render(request, 'webapp/graph/monthly.html', {'meterid': _meter_id, 'year': _year})
 
 
 # Render monthly image
@@ -33,25 +34,26 @@ def monthly_png(request):
 
     # print(f"Request meter id={_meter_id}  year={_year}")
 
-    data = TotalKwMonthly.objects.filter(meter_id=_meter_id, read_year=_year).order_by('read_year', 'read_month')
+    data = MeterUsage.objects.filter(meter_id=_meter_id, read_year=_year).order_by('read_year', 'read_month')
     if not data:
         return graph_not_found()
 
-    month_kw = data.values_list('read_month', 'total_kw')
-    month, kw = zip(*month_kw)
+    month_kw = data.values_list('read_month', 'total_usage')
+    # month, kw = zip(*month_kw)
+    months = (1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12)
+    monthly_usage = get_usage(month_kw)
 
     fig = Figure()
     ax = fig.add_subplot()
 
-    ax.plot(month, kw, marker='.', color='#0000ff', label='Month Kw')
-    # ax.plot(month, kw, marker='.', color='#0000ff', label='')
-
-    ax.set_xlabel('Month')
-    ax.set_ylabel('Kw')
-    ax.set_title("Zodicom Kw")
+    ax.plot(months, monthly_usage, marker='.', color='#0000ff', label='Usage')
+    #plt.xticks(months)
+    ax.set_xlim(1, 12)
+    ax.set_xlabel('Months')
+    ax.set_ylabel('KW')
+    ax.set_title("Zodicom KW")
     ax.grid()
-    ax.legend()
-
+    ax.legend(loc="upper right", shadow=True, bbox_to_anchor=(1, 1.05))
     canvas = FigureCanvas(fig)
 
     buf = io.BytesIO()
@@ -72,3 +74,14 @@ def yearly(request):
 def graph_not_found():
     with open("webapp/static/img/graph-no-data.png", "rb") as img_file:
         return HttpResponse(img_file.read(), content_type="image/png")
+
+
+def get_usage(values):
+    # 12 months result
+    result = [0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00]
+    for x in range(0, 12):
+        for v in values:
+            month = x + 1
+            if month == v[0]:
+                result[x] = v[1]
+    return result
