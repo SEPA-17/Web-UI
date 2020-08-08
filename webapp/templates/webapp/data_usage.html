@@ -17,7 +17,7 @@
         <tbody>
         {% for data in datausage %}
         <tr>
-            <td>{{ data.meter_id }}</td>
+            <td><a href="{% url 'graph-monthly' %}?meterid={{data.meter_id}}" title="Display Graph">{{ data.meter_id }}</a></td>
             <td>{{ data.read_month|stringformat:"02d" }}-{{ data.read_year }}</td>
             <td>{{ data.min_kwh|stringformat:".2f" }}</td>
             <td>{{ data.max_kwh|stringformat:".2f" }}</td>

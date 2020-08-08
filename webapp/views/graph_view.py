@@ -46,7 +46,7 @@ def monthly_png(request):
     fig = Figure()
     ax = fig.add_subplot()
 
-    ax.plot(months, monthly_usage, marker='.', color='#0000ff', label='Usage')
+    ax.plot(months, monthly_usage, marker='.', color='#2fa4e7', label='Usage')
     #plt.xticks(months)
     ax.set_xlim(1, 12)
     ax.set_xlabel('Months')
