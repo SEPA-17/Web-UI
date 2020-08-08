@@ -22,7 +22,7 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 SECRET_KEY = os.environ.get('SECRET_KEY', ')^f1a(5z4-bo=^i(@zf3!l4e4)2&b8f4$x8nw@4dfw(2!*#nbv')
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = os.environ.get('DEBUG', False)
+DEBUG = os.environ.get('DEBUG', True)
 
 ALLOWED_HOSTS = ['web-app.eba-xee4gc2x.ap-southeast-2.elasticbeanstalk.com', 'localhost', '127.0.0.1']
 

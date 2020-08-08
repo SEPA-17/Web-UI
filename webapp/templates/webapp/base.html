@@ -6,7 +6,7 @@
     {% if title %}
         <title>Zodicom - {{ title }}</title>
     {% else %}
-        <title>Zodicom Meter Data</title>
+        <title>Zodicom - Home</title>
     {% endif %}
 
     <!-- Bootstrap CSS -->
@@ -26,10 +26,10 @@
                     {% if user.is_authenticated %}
                     <ul class="navbar-nav mr-auto">
                         <li class="nav-item">
-                            <a class="nav-link" href="{% url 'meterdata' %}">Meter Data</span></a>
+                            <a class="nav-link" href="{% url 'meter-data' %}">Meter Data</span></a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="{% url 'graph-monthly' %}">Monthly Graph</span></a>
+                            <a class="nav-link" href="{% url 'data-usage' %}">Data Usage</span></a>
                         </li>
                     </ul>
                     <div class="navbar-nav">

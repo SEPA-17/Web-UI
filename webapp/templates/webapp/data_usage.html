@@ -1,0 +1,68 @@
+{% extends "webapp/base.html" %}
+{% block content %}
+<div class="content-section">
+    <h2>Data Usage</h2>
+    <div class="border-top pt-5">
+    </div>
+    <table class="table table-hover">
+        <thead class="thead-light">
+        <tr>
+            <th scope="col">Meter Id</th>
+            <th scope="col">Read At</th>
+            <th scope="col">First Read</th>
+            <th scope="col">Last Read</th>
+            <th scope="col">Usage</th>
+        </tr>
+        </thead>
+        <tbody>
+        {% for data in datausage %}
+        <tr>
+            <td>{{ data.meter_id }}</td>
+            <td>{{ data.read_month|stringformat:"02d" }}-{{ data.read_year }}</td>
+            <td>{{ data.min_kwh|stringformat:".2f" }}</td>
+            <td>{{ data.max_kwh|stringformat:".2f" }}</td>
+            <td>{{ data.total_usage|stringformat:".2f" }}</td>
+        </tr>
+        {% empty %}
+            <tr><td colspan="15">No result found</td></tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    {% if is_paginated and page_obj.paginator.num_pages > 1 %}
+        <ul class="pagination">
+            {% if page_obj.has_previous %}
+                <li class="page-item">
+                    <a class="page-link" href="?page={{ page_obj.previous_page_number }}&{{ requestUrl }}" tabindex="-1" aria-disabled="true">Previous</a>
+                </li>
+            {% else %}
+                <li class="disabled"><span class="page-link">Previous</span></li>
+            {% endif %}
+
+            {% if page_obj.number|add:'-4' > 1 %}
+                <li class="page-item"><a class="page-link" href="?page={{ page_obj.number|add:'-5' }}&{{ requestUrl }}">&hellip;</a></li>
+            {% endif %}
+
+            {% for i in page_obj.paginator.page_range %}
+                {% if page_obj.number == i %}
+                    <li class="page-item active"><span class="page-link">{{ i }} <span class="sr-only">(current)</span></span></li>
+                {% elif i > page_obj.number|add:'-5' and i < page_obj.number|add:'5' %}
+                    <li class="page-item"><a class="page-link" href="?page={{ i }}&{{ requestUrl }}">{{ i }}</a></li>
+                {% endif %}
+            {% endfor %}
+
+            {% if page_obj.paginator.num_pages > page_obj.number|add:'4' %}
+                <li class="page-item"><a class="page-link" href="?page={{ page_obj.number|add:'5' }}&{{ requestUrl }}">&hellip;</a></li>
+            {% endif %}
+
+            {% if page_obj.has_next %}
+                <li class="page-item">
+                    <a class="page-link" href="?page={{ page_obj.next_page_number }}&{{ requestUrl }}">Next</a>
+                </li>
+            {% else %}
+                <li class="disabled"><span class="page-link">Next</span></li>
+            {% endif %}
+        </ul>
+    {% endif %}
+</div>
+{% endblock content %}

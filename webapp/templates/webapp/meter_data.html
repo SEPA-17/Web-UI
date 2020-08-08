@@ -3,7 +3,7 @@
 <div class="content-section">
     <h2>Meter Data</h2>
     <div class="border-top pt-5">
-        <form action="{% url 'meterdata' %}" method="GET">
+        <form action="{% url 'meter-data' %}" method="GET">
             <div class="form-row row">
                 <div class="col-sm-12 col-md-8">
                     <div class="form-row row">
@@ -49,8 +49,8 @@
     <table class="table">
         <thead class="thead-light">
         <tr>
-            <th scope="col">MeterId</th>
-            <th scope="col">ReadAt</th>
+            <th scope="col">Meter Id</th>
+            <th scope="col">Read At</th>
             <th scope="col">KwH</th>
             <th scope="col">KW</th>
             <th scope="col">KvA</th>
@@ -69,16 +69,16 @@
         <tr>
             <td>{{ data.MeterId }}</td>
             <td>{{ data.ReadAt|date:"d/m/Y H:i:s" }}</td>
-            <td>{{ data.KWH }}</td>
-            <td>{{ data.KW }}</td>
-            <td>{{ data.KVA }}</td>
-            <td>{{ data.KVAr }}</td>
-            <td>{{ data.Ph1i }}</td>
-            <td>{{ data.Ph2i }}</td>
-            <td>{{ data.Ph3i }}</td>
-            <td>{{ data.Ph1v }}</td>
-            <td>{{ data.Ph2v }}</td>
-            <td>{{ data.Ph3v }}</td>
+            <td>{{ data.KWH|stringformat:".3f" }}</td>
+            <td>{{ data.KW|stringformat:".3f" }}</td>
+            <td>{{ data.KVA|stringformat:".3f" }}</td>
+            <td>{{ data.KVAr|stringformat:".3f" }}</td>
+            <td>{{ data.Ph1i|stringformat:".3f" }}</td>
+            <td>{{ data.Ph2i|stringformat:".3f" }}</td>
+            <td>{{ data.Ph3i|stringformat:".3f" }}</td>
+            <td>{{ data.Ph1v|stringformat:".3f" }}</td>
+            <td>{{ data.Ph2v|stringformat:".3f" }}</td>
+            <td>{{ data.Ph3v|stringformat:".3f" }}</td>
             <td>{{ data.PF }}</td>
         </tr>
         {% empty %}
