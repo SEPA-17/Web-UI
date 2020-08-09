@@ -1,0 +1,33 @@
+/*
+    Created on : 18/05/2019, 10:51:08 AM
+    Author     : Tola
+*/
+
+.home-icon-group {
+    clear: both;
+}
+
+.home-icon-link {
+    display: block;
+    border: 1px solid #CCCCCC;
+    border-radius: 12px;
+    padding: 12px;
+    margin: 24px;
+    text-align: center;
+    vertical-align: middle;
+    width: 120px;
+    height: 160px;
+    float: left;
+}
+
+.home-icon-link span {
+    display: block;
+}
+
+.home-icon-link img {
+    border: none;
+}
+
+.home-icon-link:hover {
+    border: 1px solid #000077;
+}

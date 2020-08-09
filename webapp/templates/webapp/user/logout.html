@@ -1,0 +1,20 @@
+{% extends "webapp/base.html" %}
+{% load static %}
+{% block content %}
+<div class="content-section">
+    <div><h2>User Logout</h2></div>
+    <div class="border-top pt-5">
+        <span>You have been logged out. You are redirect to <a href="{% url 'login' %}">login page</a> ...</span>
+    </div>
+</div>
+{% endblock content %}
+
+{% block bodyscript %}
+    <script type="text/javascript">
+        $(document).ready(function() {
+            setTimeout(function () {
+                window.location.href = "{% url 'login' %}";
+            }, 3000);
+        }) ;
+    </script>
+{% endblock bodyscript %}

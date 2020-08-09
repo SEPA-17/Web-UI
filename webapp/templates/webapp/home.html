@@ -1,6 +1,25 @@
 {% extends "webapp/base.html" %}
+{% load static %}
 {% block content %}
     <div class="content-section">
-        Zodicom Home Page
+        <h2>Zodicom</h2>
+        <div class="border-top pt-5">
+            <div class="home-icon-group">
+                <a class="home-icon-link" href="{% url 'meterdata' %}">
+                    <img src="{% static 'img/home/data-table.png' %}" alt="meter data" width="64" height="64"
+                                                style="height: 64px; width: 64px; align-content: center" />
+                    <span>Meter Data</span>
+                </a>
+                <a class="home-icon-link" href="{% url 'graph-monthly' %}">
+                    <img src="{% static 'img/home/graph.png' %}" alt="meter data" width="64" height="64"
+                                                style="height: 64px; width: 64px; align-content: center" />
+                    <span>Monthly Graph</span>
+                </a>
+            </div>
+        </div>
     </div>
 {% endblock content %}
+
+{% block bodyscript %}
+    <link rel="stylesheet" type="text/css" href="{% static 'webapp/home.css' %}">
+{% endblock bodyscript %}

@@ -1,21 +1,21 @@
 from urllib.parse import urlencode
+from django.contrib.auth.decorators import login_required
+from django.utils.decorators import method_decorator
 from django.views.generic import ListView
-from django.views.generic.edit import FormMixin
 from ..models import MeterData
-from ..forms.meter_filter_form import MeterFilterForm
 from ..helper import parse_date_to_iso
 
 
-class MeterDataView(FormMixin, ListView):
+class MeterDataView(ListView):
     title = 'MeterData'
     template_name = 'webapp/meterdata.html'
     model = MeterData
     context_object_name = 'meterdata'
     # ordering = ['-ReadAt']
     paginate_by = 10
-    form_class = MeterFilterForm
     requestUrl = {}
 
+    @method_decorator(login_required)
     def dispatch(self, request, *args, **kwargs):
         self.requestUrl['meterId'] = self.request.GET.get('meterId', '')
         self.requestUrl['fromDate'] = self.request.GET.get('fromDate', '')
