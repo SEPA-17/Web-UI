@@ -5,7 +5,17 @@
     <div class="border-top pt-5">
         <form action="{% url 'meter-data' %}" method="GET">
             <div class="form-row row">
-                <div class="col-sm-12 col-md-8">
+                <div class="col-sm-12 col-md-3">
+                    <div class="form-row row">
+                        <div class="form-group col-md-4 text-md-right">
+                            <label>Meter Id:</label>
+                        </div>
+                        <div class="form-group col-md-8">
+                            <input type="text" class="form-control" name="meterId" value="{{ meterId }}" />
+                        </div>
+                    </div>
+                </div>
+                <div class="col-sm-12 col-md-7">
                     <div class="form-row row">
                         <div class="form-group col-md-2 text-md-right">
                             <label>Read at:</label>
@@ -28,24 +38,14 @@
                         </div>
                     </div>
                 </div>
-                <div class="col-sm-12 col-md-4">
-                    <div class="form-row row">
-                        <div class="form-group col-md-3 text-md-right">
-                            <label>Meter Id:</label>
-                        </div>
-                        <div class="form-group col-md-5">
-                            <input type="text" class="form-control" name="meterId" value="{{ meterId }}" />
-                        </div>
-                        <div class="form-group col-md-4">
-                            <input type="submit" value="Filter" class="btn btn-primary" />
-                        </div>
-                    </div>
+                <div class="col-sm-12 col-md-2 text-md-center">
+                    <input type="submit" value="Filter" class="btn btn-primary" />
                 </div>
             </div>
             <input type="hidden" name="page" value="1">
         </form>
-
     </div>
+
     <table class="table">
         <thead class="thead-light">
         <tr>

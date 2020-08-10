@@ -3,7 +3,49 @@
 <div class="content-section">
     <h2>Data Usage</h2>
     <div class="border-top pt-5">
+        <form action="{% url 'data-usage' %}" method="GET">
+            <div class="form-row row">
+                <div class="col-sm-12 col-md-3">
+                    <div class="form-row row">
+                        <div class="form-group col-md-4 text-md-right">
+                            <label>Meter Id:</label>
+                        </div>
+                        <div class="form-group col-md-8">
+                            <input type="text" class="form-control" name="meterId" value="{{ meterId }}" />
+                        </div>
+                    </div>
+                </div>
+                <div class="col-sm-12 col-md-7">
+                    <div class="form-row row">
+                        <div class="form-group col-md-2 text-md-right">
+                            <label>Read at:</label>
+                        </div>
+                        <div class="form-group col-md-5">
+                            <div class="input-group date" id="fromDateTimePicker" data-target-input="nearest">
+                                <input type="text" class="form-control datetimepicker-input" data-target="#fromDateTimePicker" name="fromDate" placeholder="From Date" value="{{ fromDate }}"/>
+                                <div class="input-group-append" data-target="#fromDateTimePicker" data-toggle="datetimepicker">
+                                    <div class="input-group-text"><i class="fa fa-calendar"></i></div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group col-md-5">
+                            <div class="input-group date" id="toDateTimePicker" data-target-input="nearest">
+                                <input type="text" class="form-control datetimepicker-input" data-target="#toDateTimePicker" name="toDate" placeholder="To Date" value="{{ toDate }}"/>
+                                <div class="input-group-append" data-target="#toDateTimePicker" data-toggle="datetimepicker">
+                                    <div class="input-group-text"><i class="fa fa-calendar"></i></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-sm-12 col-md-2 text-md-center">
+                    <input type="submit" value="Filter" class="btn btn-primary" />
+                </div>
+            </div>
+            <input type="hidden" name="page" value="1">
+        </form>
     </div>
+
     <table class="table table-hover">
         <thead class="thead-light">
         <tr>
@@ -17,7 +59,7 @@
         <tbody>
         {% for data in datausage %}
         <tr>
-            <td><a href="{% url 'graph-monthly' %}?meterid={{data.meter_id}}" title="Display Graph">{{ data.meter_id }}</a></td>
+            <td><a href="{% url 'graph-monthly' %}?meterid={{data.meter_id}}&year={{data.read_year}}" title="Display Graph">{{ data.meter_id }}</a></td>
             <td>{{ data.read_month|stringformat:"02d" }}-{{ data.read_year }}</td>
             <td>{{ data.min_kwh|stringformat:".2f" }}</td>
             <td>{{ data.max_kwh|stringformat:".2f" }}</td>
@@ -66,3 +108,16 @@
     {% endif %}
 </div>
 {% endblock content %}
+
+{% block bodyscript %}
+    <script type="text/javascript">
+            $(function () {
+                $('#fromDateTimePicker').datetimepicker({
+                    format: 'MM/YYYY'
+                });
+                $('#toDateTimePicker').datetimepicker({
+                    format: 'MM/YYYY'
+                });
+            });
+    </script>
+{% endblock bodyscript %}
