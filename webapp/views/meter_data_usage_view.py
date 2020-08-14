@@ -32,17 +32,19 @@ class DataUsageView(ListView):
 
         if self.requestUrl['fromDate'] != '':
             try:
-                dt_string = parse_date_to_iso(self.requestUrl['fromDate'])
-                if dt_string != '':
-                    data = data.filter(read_at__gte=dt_string)
+                dt_string = self.requestUrl['fromDate'].split('/')
+                if len(dt_string) == 2:
+                    data = data.filter(read_month__gte=dt_string[0])
+                    data = data.filter(read_year__gte=dt_string[1])
             except (ValueError, TypeError):
                 pass
 
         if self.requestUrl['toDate'] != '':
             try:
-                dt_string = parse_date_to_iso(self.requestUrl['toDate'])
-                if dt_string != '':
-                    data = data.filter(read_at__lte=dt_string)
+                dt_string = self.requestUrl['toDate'].split('/')
+                if len(dt_string) == 2:
+                    data = data.filter(read_month__lte=dt_string[0])
+                    data = data.filter(read_year__lte=dt_string[1])
             except (ValueError, TypeError):
                 pass
 
