@@ -40,11 +40,11 @@
 
         $(document).ready(function() {
             showLoading(true);
-            var img = document.getElementById("imgGraph");
-            img.onload = function() {
-                showLoading(false);
-            }
         }) ;
+
+        $("#imgGraph").on("load", function() {
+            showLoading(false);
+        });
 
         function showFilterGraph(e) {
             var evt = e || event;
