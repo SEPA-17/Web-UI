@@ -11,7 +11,7 @@ class DataUsageView(ListView):
     template_name = 'webapp/data_usage.html'
     model = MeterUsage
     context_object_name = 'datausage'
-    paginate_by = 10
+    paginate_by = 50
     requestUrl = {}
 
     def dispatch(self, request, *args, **kwargs):

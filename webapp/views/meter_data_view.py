@@ -12,7 +12,7 @@ class MeterDataView(ListView):
     model = MeterData
     context_object_name = 'meterdata'
     # ordering = ['-ReadAt']
-    paginate_by = 10
+    paginate_by = 50
     requestUrl = {}
 
     @method_decorator(login_required)
