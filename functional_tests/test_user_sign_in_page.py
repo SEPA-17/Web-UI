@@ -37,14 +37,15 @@ class TestUserSignInPage(StaticLiveServerTestCase):
     # User should sign in successfully
     def test_sign_in_with_user_should_success(self):
         self.browser.get(self.live_server_url + reverse('login'))
+        self.browser.implicitly_wait(3)
         self.browser.find_element_by_id('id_username').send_keys('user')
         self.browser.find_element_by_id('id_password').send_keys('User*123')
+        self.browser.implicitly_wait(3)
         self.browser.find_element_by_class_name('btn-primary').click()
 
         try:
             WebDriverWait(self.browser, 7).until(lambda driver: driver.find_element_by_tag_name('body'))
             home_screen = self.browser.find_element_by_class_name('home-icon-group')
-            time.sleep(10)
             self.assertTrue(home_screen is not None)
         except NoSuchElementException:
             self.assertTrue(False)
