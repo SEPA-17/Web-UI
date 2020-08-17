@@ -59,8 +59,9 @@ class TestMeterDataPage(StaticLiveServerTestCase):
         read_from = datetime.datetime(2020, 1, 1)
         read_to = datetime.datetime(2020, 1, 31)
 
-        self.browser.get(self.live_server_url + reverse('meter-data'))
+        self.browser.get(self.live_server_url)
         self.browser.implicitly_wait(5)
+        self.browser.find_element_by_id('linkMeterDataPage').click()
         self.browser.find_element_by_id('meterId').send_keys('1')
         self.browser.find_element_by_id('fromDate').send_keys(read_from.strftime("%d/%m/%Y, %H:%M:%S"))
         self.browser.find_element_by_id('toDate').send_keys(read_to.strftime("%d/%m/%Y, %H:%M:%S"))
