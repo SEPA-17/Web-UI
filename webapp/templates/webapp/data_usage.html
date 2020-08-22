@@ -71,6 +71,10 @@
         </tbody>
     </table>
 
+    {% if datausage.count > 0 %}
+    <div id="recordFound"></div>
+    {% endif %}
+
     {% if is_paginated and page_obj.paginator.num_pages > 1 %}
         <ul class="pagination">
             {% if page_obj.has_previous %}
