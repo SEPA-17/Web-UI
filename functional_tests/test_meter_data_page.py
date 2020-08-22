@@ -7,7 +7,6 @@ from selenium.webdriver.support.ui import WebDriverWait
 from django.contrib.staticfiles.testing import StaticLiveServerTestCase
 from django.contrib.auth.models import User
 from webapp.models import ServiceArea, Meter, MeterData
-from django.utils import timezone
 import datetime
 
 
@@ -59,18 +58,18 @@ class TestMeterDataPage(StaticLiveServerTestCase):
         read_from = datetime.datetime(2020, 1, 1)
         read_to = datetime.datetime(2020, 1, 30)
 
-        self.browser.get(self.live_server_url)
-        self.browser.implicitly_wait(5)
-        self.browser.find_element_by_id('linkMeterDataPage').click()
+        #self.browser.get(self.live_server_url)
+        self.browser.get(self.live_server_url + "/meterdata")
+        #WebDriverWait(self.browser, 7).until(lambda driver: driver.find_element_by_tag_name('body'))
+        #self.browser.find_element_by_id('linkMeterDataPage').click()
+        WebDriverWait(self.browser, 7).until(lambda driver: driver.find_element_by_tag_name('body'))
         self.browser.find_element_by_id('meterId').send_keys('1')
         self.browser.find_element_by_id('fromDate').send_keys(read_from.strftime("%d/%m/%Y, %H:%M:%S"))
         self.browser.find_element_by_id('toDate').send_keys(read_to.strftime("%d/%m/%Y, %H:%M:%S"))
 
-        self.browser.implicitly_wait(5)
         self.browser.find_element_by_class_name('btn-primary').click()
         try:
             WebDriverWait(self.browser, 7).until(lambda driver: driver.find_element_by_tag_name('body'))
-            self.browser.implicitly_wait(5)
             record_found = self.browser.find_element_by_id('recordFound')
             self.assertIsNotNone(record_found)
         except NoSuchElementException:

@@ -11,7 +11,7 @@
                             <label>Meter Id:</label>
                         </div>
                         <div class="form-group col-md-8">
-                            <input type="text" class="form-control" name="meterId" value="{{ meterId }}" />
+                            <input type="text" class="form-control" name="meterId" id="meterId" value="{{ meterId }}" />
                         </div>
                     </div>
                 </div>
@@ -22,7 +22,7 @@
                         </div>
                         <div class="form-group col-md-5">
                             <div class="input-group date" id="fromDateTimePicker" data-target-input="nearest">
-                                <input type="text" class="form-control datetimepicker-input" data-target="#fromDateTimePicker" name="fromDate" placeholder="From Date" value="{{ fromDate }}"/>
+                                <input type="text" class="form-control datetimepicker-input" data-target="#fromDateTimePicker" id="fromDate" name="fromDate" placeholder="From Date" value="{{ fromDate }}"/>
                                 <div class="input-group-append" data-target="#fromDateTimePicker" data-toggle="datetimepicker">
                                     <div class="input-group-text"><i class="fa fa-calendar"></i></div>
                                 </div>
@@ -30,7 +30,7 @@
                         </div>
                         <div class="form-group col-md-5">
                             <div class="input-group date" id="toDateTimePicker" data-target-input="nearest">
-                                <input type="text" class="form-control datetimepicker-input" data-target="#toDateTimePicker" name="toDate" placeholder="To Date" value="{{ toDate }}"/>
+                                <input type="text" class="form-control datetimepicker-input" data-target="#toDateTimePicker" name="toDate" id="toDate" placeholder="To Date" value="{{ toDate }}"/>
                                 <div class="input-group-append" data-target="#toDateTimePicker" data-toggle="datetimepicker">
                                     <div class="input-group-text"><i class="fa fa-calendar"></i></div>
                                 </div>
