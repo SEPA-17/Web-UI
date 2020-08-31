@@ -2,6 +2,12 @@ body {
 
 }
 
+#mainContainer {
+    min-height: 600px;
+}
+
+
+/* Graph */
 .graph-group {
     display: block;
     position: relative;
@@ -34,5 +40,13 @@ body {
     vertical-align: middle;
     top: 50%;
     position: relative;
+}
+/* end graph */
+
+/* footer */
+.site-footer {
+    background: #2FA4E7;
+    color: #FFFFFF;
+    padding: 8px;
 }
 

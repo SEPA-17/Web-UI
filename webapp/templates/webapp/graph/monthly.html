@@ -2,12 +2,12 @@
 {% load static %}
 {% block content %}
     <div class="content-section">
-        <h2>Display Monthly Graph</h2>
+        <h2>Data Usage</h2>
         <div class="border-top pt-5">
             <div class="row">
                 <div class="col-md-8">
                     <div class="graph-group">
-                        <img id="imgGraph" src="{% url 'graph-monthly-png' %}?meterId={{ meterid }}" alt="Meter graph"/>
+                        <img id="imgGraph" src="{% url 'graph-monthly-png' %}?meterId={{ meterid }}&year={{ year }}" alt="Meter graph"/>
                         <div id="loadingMask" class="loading-mask">
                             <img src="{% static 'img/loading.gif' %}" alt="loading" />
                         </div>
@@ -40,11 +40,11 @@
 
         $(document).ready(function() {
             showLoading(true);
-            var img = document.getElementById("imgGraph");
-            img.onload = function() {
-                showLoading(false);
-            }
         }) ;
+
+        $("#imgGraph").on("load", function() {
+            showLoading(false);
+        });
 
         function showFilterGraph(e) {
             var evt = e || event;

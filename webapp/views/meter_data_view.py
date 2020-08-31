@@ -7,12 +7,12 @@ from ..helper import parse_date_to_iso
 
 
 class MeterDataView(ListView):
-    title = 'MeterData'
-    template_name = 'webapp/meterdata.html'
+    title = 'Meter Data'
+    template_name = 'webapp/meter_data.html'
     model = MeterData
     context_object_name = 'meterdata'
     # ordering = ['-ReadAt']
-    paginate_by = 10
+    paginate_by = 50
     requestUrl = {}
 
     @method_decorator(login_required)

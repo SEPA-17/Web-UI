@@ -1,0 +1,143 @@
+{% extends "webapp/base.html" %}
+{% block content %}
+<div class="content-section">
+    <h2>Meter Data</h2>
+    <div class="border-top pt-5">
+        <form action="{% url 'meter-data' %}" method="GET">
+            <div class="form-row row">
+                <div class="col-sm-12 col-md-3">
+                    <div class="form-row row">
+                        <div class="form-group col-md-4 text-md-right">
+                            <label>Meter Id:</label>
+                        </div>
+                        <div class="form-group col-md-8">
+                            <input type="text" class="form-control" name="meterId" id="meterId" value="{{ meterId }}" />
+                        </div>
+                    </div>
+                </div>
+                <div class="col-sm-12 col-md-7">
+                    <div class="form-row row">
+                        <div class="form-group col-md-2 text-md-right">
+                            <label>Read at:</label>
+                        </div>
+                        <div class="form-group col-md-5">
+                            <div class="input-group date" id="fromDateTimePicker" data-target-input="nearest">
+                                <input type="text" class="form-control datetimepicker-input" data-target="#fromDateTimePicker" id="fromDate" name="fromDate" placeholder="From MM/YYYY" value="{{ fromDate }}"/>
+                                <div class="input-group-append" data-target="#fromDateTimePicker" data-toggle="datetimepicker">
+                                    <div class="input-group-text"><i class="fa fa-calendar"></i></div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group col-md-5">
+                            <div class="input-group date" id="toDateTimePicker" data-target-input="nearest">
+                                <input type="text" class="form-control datetimepicker-input" data-target="#toDateTimePicker" id="toDate" name="toDate" placeholder="To MM/YYYY" value="{{ toDate }}"/>
+                                <div class="input-group-append" data-target="#toDateTimePicker" data-toggle="datetimepicker">
+                                    <div class="input-group-text"><i class="fa fa-calendar"></i></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-sm-12 col-md-2 text-md-center">
+                    <input type="submit" value="Filter" class="btn btn-primary" />
+                </div>
+            </div>
+            <input type="hidden" name="page" value="1">
+        </form>
+    </div>
+
+    <table class="table">
+        <thead class="thead-light">
+        <tr>
+            <th scope="col">Meter Id</th>
+            <th scope="col">Read At</th>
+            <th scope="col">KwH</th>
+            <th scope="col">KW</th>
+            <th scope="col">KvA</th>
+            <th scope="col">KvAr</th>
+            <th scope="col">Ph1i</th>
+            <th scope="col">Ph2i</th>
+            <th scope="col">Ph3i</th>
+            <th scope="col">Ph1v</th>
+            <th scope="col">Ph2v</th>
+            <th scope="col">Ph3v</th>
+            <th scope="col">PF</th>
+        </tr>
+        </thead>
+        <tbody>
+        {% for data in meterdata %}
+        <tr>
+            <td>{{ data.MeterId }}</td>
+            <td>{{ data.ReadAt|date:"d/m/Y H:i:s" }}</td>
+            <td>{{ data.KWH|stringformat:".3f" }}</td>
+            <td>{{ data.KW|stringformat:".3f" }}</td>
+            <td>{{ data.KVA|stringformat:".3f" }}</td>
+            <td>{{ data.KVAr|stringformat:".3f" }}</td>
+            <td>{{ data.Ph1i|stringformat:".3f" }}</td>
+            <td>{{ data.Ph2i|stringformat:".3f" }}</td>
+            <td>{{ data.Ph3i|stringformat:".3f" }}</td>
+            <td>{{ data.Ph1v|stringformat:".3f" }}</td>
+            <td>{{ data.Ph2v|stringformat:".3f" }}</td>
+            <td>{{ data.Ph3v|stringformat:".3f" }}</td>
+            <td>{{ data.PF }}</td>
+        </tr>
+        {% empty %}
+            <tr><td colspan="15">No result found</td></tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    {% if meterdata.count > 0 %}
+    <div id="recordFound"></div>
+    {% endif %}
+
+    {% if is_paginated and page_obj.paginator.num_pages > 1 %}
+        <ul class="pagination">
+            {% if page_obj.has_previous %}
+                <li class="page-item">
+                    <a class="page-link" href="?page={{ page_obj.previous_page_number }}&{{ requestUrl }}" tabindex="-1" aria-disabled="true">Previous</a>
+                </li>
+            {% else %}
+                <li class="disabled"><span class="page-link">Previous</span></li>
+            {% endif %}
+
+            {% if page_obj.number|add:'-4' > 1 %}
+                <li class="page-item"><a class="page-link" href="?page={{ page_obj.number|add:'-5' }}&{{ requestUrl }}">&hellip;</a></li>
+            {% endif %}
+
+            {% for i in page_obj.paginator.page_range %}
+                {% if page_obj.number == i %}
+                    <li class="page-item active"><span class="page-link">{{ i }} <span class="sr-only">(current)</span></span></li>
+                {% elif i > page_obj.number|add:'-5' and i < page_obj.number|add:'5' %}
+                    <li class="page-item"><a class="page-link" href="?page={{ i }}&{{ requestUrl }}">{{ i }}</a></li>
+                {% endif %}
+            {% endfor %}
+
+            {% if page_obj.paginator.num_pages > page_obj.number|add:'4' %}
+                <li class="page-item"><a class="page-link" href="?page={{ page_obj.number|add:'5' }}&{{ requestUrl }}">&hellip;</a></li>
+            {% endif %}
+
+            {% if page_obj.has_next %}
+                <li class="page-item">
+                    <a class="page-link" href="?page={{ page_obj.next_page_number }}&{{ requestUrl }}">Next</a>
+                </li>
+            {% else %}
+                <li class="disabled"><span class="page-link">Next</span></li>
+            {% endif %}
+        </ul>
+    {% endif %}
+</div>
+{% endblock content %}
+
+{% block bodyscript %}
+    <script type="text/javascript">
+            $(function () {
+                $('#fromDateTimePicker').datetimepicker({
+                    format: 'DD/MM/YYYY HH:mm:ss'
+                });
+                $('#toDateTimePicker').datetimepicker({
+                    format: 'DD/MM/YYYY HH:mm:ss'
+                });
+            });
+    </script>
+{% endblock bodyscript %}
