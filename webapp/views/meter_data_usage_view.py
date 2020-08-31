@@ -3,7 +3,6 @@ from django.contrib.auth.decorators import login_required
 from django.utils.decorators import method_decorator
 from django.views.generic import ListView
 from ..models import MeterUsage
-from ..helper import parse_date_to_iso
 
 
 class DataUsageView(ListView):
@@ -14,6 +13,7 @@ class DataUsageView(ListView):
     paginate_by = 50
     requestUrl = {}
 
+    @method_decorator(login_required)
     def dispatch(self, request, *args, **kwargs):
         self.requestUrl['meterId'] = self.request.GET.get('meterId', '')
         self.requestUrl['fromDate'] = self.request.GET.get('fromDate', '')

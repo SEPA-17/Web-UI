@@ -67,10 +67,6 @@ def monthly_png(request):
     return response
 
 
-def yearly(request):
-    return render(request, 'webapp/graph/yearly.html')
-
-
 def graph_not_found():
     with open("webapp/static/img/graph-no-data.png", "rb") as img_file:
         return HttpResponse(img_file.read(), content_type="image/png")
