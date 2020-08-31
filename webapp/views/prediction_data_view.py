@@ -15,7 +15,7 @@ class PredictionView(ListView):
 
     @method_decorator(login_required)
     def dispatch(self, request, *args, **kwargs):
-        self.requestUrl['areaId'] = self.request.GET.get('areaId', '')
+        self.requestUrl['areaId'] = self.request.GET.get('areaId', 0)
         self.requestUrl['year'] = self.request.GET.get('year', '')
         return super().dispatch(request, *args, **kwargs)
 
@@ -23,13 +23,15 @@ class PredictionView(ListView):
         data = self.model.objects.all()
 
         # Filters
-        if not self.requestUrl['areaId'] and self.requestUrl['areaId'] != 0:
+        if self.requestUrl['areaId'] and self.requestUrl['areaId'] != 0:
             try:
-                data = data.filter(AreaId=self.requestUrl['areaId'])
+                area_id = self.requestUrl['areaId']
+                print('area id =' + area_id)
+                data = data.filter(AreaId=area_id)
             except ValueError:
                 pass
 
-        if not self.requestUrl['year'] and self.requestUrl['year'] != '':
+        if self.requestUrl['year'] and self.requestUrl['year'] != '':
             try:
                 year = self.requestUrl['year']
                 data = data.filter(prediction_date__gte=year)
