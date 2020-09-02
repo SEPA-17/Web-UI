@@ -5,15 +5,20 @@
         <h2>Zodicom</h2>
         <div class="border-top pt-5">
             <div class="home-icon-group">
-                <a class="home-icon-link" href="{% url 'meterdata' %}">
-                    <img src="{% static 'img/home/data-table.png' %}" alt="meter data" width="64" height="64"
+                <a class="home-icon-link" id="linkMeterDataPage" href="{% url 'meter-data' %}">
+                    <img src="{% static 'img/home/database.png' %}" alt="meter data" width="64" height="64"
                                                 style="height: 64px; width: 64px; align-content: center" />
                     <span>Meter Data</span>
                 </a>
-                <a class="home-icon-link" href="{% url 'graph-monthly' %}">
-                    <img src="{% static 'img/home/graph.png' %}" alt="meter data" width="64" height="64"
+                <a class="home-icon-link" id="linkDataUsagePage" href="{% url 'data-usage' %}">
+                    <img src="{% static 'img/home/data-table.png' %}" alt="data usage" width="64" height="64"
                                                 style="height: 64px; width: 64px; align-content: center" />
-                    <span>Monthly Graph</span>
+                    <span>Data Usage</span>
+                </a>
+                <a class="home-icon-link" href="{% url 'prediction-data' %}">
+                    <img src="{% static 'img/home/graph.png' %}" alt="prediction data" width="64" height="64"
+                                                style="height: 64px; width: 64px; align-content: center" />
+                    <span>Prediction Data</span>
                 </a>
             </div>
         </div>
