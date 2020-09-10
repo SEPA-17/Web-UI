@@ -18,23 +18,50 @@
                 </div>
                 <div class="col-sm-12 col-md-7">
                     <div class="form-row row">
-                        <div class="form-group col-md-2 text-md-right">
-                            <label>Read at:</label>
-                        </div>
-                        <div class="form-group col-md-5">
-                            <div class="input-group date" id="fromDateTimePicker" data-target-input="nearest">
-                                <input type="text" class="form-control datetimepicker-input" data-target="#fromDateTimePicker" id="fromDate" name="fromDate" placeholder="From Date" value="{{ fromDate }}"/>
-                                <div class="input-group-append" data-target="#fromDateTimePicker" data-toggle="datetimepicker">
-                                    <div class="input-group-text"><i class="fa fa-calendar"></i></div>
+                        <div class="form-group col-md-6">
+                            <div class="input-group">
+                                <div class="input-group-prepend">
+                                    <label class="input-group-text">Date From:</label>
                                 </div>
+                                <select class="custom-select" id="fromMonth" name="fromMonth">
+                                    <option value="0">Month</option>
+                                    {% for x in monthRange %}
+                                        <option value="{{ x }}" {% if x == fromMonth %} selected="selected" {% endif %} >
+                                            {{ x }}
+                                        </option>
+                                    {% endfor %}
+                                </select>
+                                <select class="custom-select" id="fromYear" name="fromYear">
+                                    <option value="0">Year</option>
+                                    {% for x in yearRange %}
+                                        <option value="{{ x }}" {% if x == fromYear %} selected="selected" {% endif %} >
+                                            {{ x }}
+                                        </option>
+                                    {% endfor %}
+                                </select>
                             </div>
                         </div>
-                        <div class="form-group col-md-5">
-                            <div class="input-group date" id="toDateTimePicker" data-target-input="nearest">
-                                <input type="text" class="form-control datetimepicker-input" data-target="#toDateTimePicker" name="toDate" id="toDate" placeholder="To Date" value="{{ toDate }}"/>
-                                <div class="input-group-append" data-target="#toDateTimePicker" data-toggle="datetimepicker">
-                                    <div class="input-group-text"><i class="fa fa-calendar"></i></div>
+                        <div class="form-group col-md-6">
+                            <div class="input-group">
+                                <div class="input-group-prepend">
+                                    <label class="input-group-text">To:</label>
                                 </div>
+                                <select class="custom-select" id="toMonth" name="toMonth">
+                                    <option value="0">Month</option>
+                                    {% for x in monthRange %}
+                                        <option value="{{ x }}" {% if x == toMonth %} selected="selected" {% endif %} >
+                                            {{ x }}
+                                        </option>
+                                    {% endfor %}
+                                </select>
+                                <select class="custom-select" id="toYear" name="toYear">
+                                    <option value="0">Year</option>
+                                    {% for x in yearRange %}
+                                        <option value="{{ x }}" {% if x == toYear %} selected="selected" {% endif %} >
+                                            {{ x }}
+                                        </option>
+                                    {% endfor %}
+                                </select>
                             </div>
                         </div>
                     </div>
@@ -51,10 +78,10 @@
         <thead class="thead-light">
         <tr>
             <th scope="col">Meter Id</th>
-            <th scope="col">Read At</th>
-            <th scope="col">First Read</th>
-            <th scope="col">Last Read</th>
-            <th scope="col">Usage</th>
+            <th scope="col">Date</th>
+            <th scope="col">First KWH</th>
+            <th scope="col">Last KWH</th>
+            <th scope="col">Total Usage</th>
             <th scope="col"></th>
         </tr>
         </thead>
@@ -117,16 +144,3 @@
     {% endif %}
 </div>
 {% endblock content %}
-
-{% block bodyscript %}
-    <script type="text/javascript">
-            $(function () {
-                $('#fromDateTimePicker').datetimepicker({
-                    format: 'MM/YYYY'
-                });
-                $('#toDateTimePicker').datetimepicker({
-                    format: 'MM/YYYY'
-                });
-            });
-    </script>
-{% endblock bodyscript %}
