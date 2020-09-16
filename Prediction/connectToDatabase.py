@@ -4,11 +4,11 @@ import pandas as pd
 import sqlalchemy
 
 # --------- Database Configuration ---------
-DB_HOST = 'localhost'
+DB_HOST = 'web-db.c6vnael0nhls.ap-southeast-2.rds.amazonaws.com'
 DB_PORT = 3306
-DB_NAME = 'meterdb-dev'
-DB_USER = 'root'
-DB_PASSWORD = 'root'
+DB_NAME = 'main_DB'
+DB_USER = 'detectivePretzel'
+DB_PASSWORD = 'brunoDiplomat'
 
 # --------- End Database Configuration ---------
 
