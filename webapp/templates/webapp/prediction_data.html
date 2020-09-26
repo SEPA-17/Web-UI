@@ -4,20 +4,32 @@
 <div class="content-section">
     <h2>Prediction Data</h2>
     <div class="border-top pt-5">
-        <form action="{% url 'prediction-data' %}" method="GET">
-            <div class="form-row row">
-                <div class="col-sm-12 col-md-3">
-                    <div class="form-row row">
-                        <div class="form-group col-md-4 text-md-right">
-                            <label>Area Id:</label>
+        <form action="{% url 'prediction-data' %}" method="GET" class="form form-inline">
+            <div class="form-row">
+                <div class="col-sm-12 col-md-10">
+                    <div class="form-row">
+                        <div class="form-group col-md-6">
+                            <div class="col-md-4 text-md-right">
+                                <label>Area Id:</label>
+                            </div>
+                            <div class="form-group col-md-8">
+                                <input type="text" class="form-control" name="areaId" id="areaId" value="{{ areaId }}" />
+                            </div>
                         </div>
-                        <div class="form-group col-md-8">
-                            <input type="text" class="form-control" name="areaId" id="areaId" value="{{ areaId }}" />
+                        <div class="form-group col-md-6">
+                            <div class="form-group">
+                                <div class="col-md-4 text-md-right">
+                                    <label>Year:</label>
+                                </div>
+                                <div class="form-group col-md-8">
+                                    <input type="text" class="form-control" name="year" id="year" value="{{ year }}" />
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>
                 <div class="col-sm-12 col-md-2 text-md-center">
-                    <input type="submit" value="Filter" class="btn btn-primary" />
+                    &nbsp; <input type="submit" value="Filter" class="btn btn-primary" />
                 </div>
             </div>
             <input type="hidden" name="page" value="1">
@@ -41,7 +53,7 @@
             <td>{{ data.prediction_date|date:"m/Y" }}</td>
             <td>{{ data.kwh|stringformat:".2f" }}</td>
             <td>{{ data.predicted_at|date:"d/m/Y H:i:s" }}</td>
-            <td><a href="{% url 'graph-monthly' %}?meterid={{data.AreaId}}&year={{data.prediction_date|date:'Y'}}" title="Display Graph">
+            <td><a href="{% url 'graph-prediction' %}?areaid={{data.AreaId_id}}&year={{data.prediction_date|date:'Y'}}" title="Display Graph">
                 <img src="{% static 'img/icon-graph.png' %}" title="view graph" style="width: 24px; height: 24px"/>
             </a></td>
         </tr>

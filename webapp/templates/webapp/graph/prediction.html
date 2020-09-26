@@ -1,0 +1,91 @@
+{% extends "webapp/base.html" %}
+{% load static %}
+{% block content %}
+    <div class="content-section">
+        <h2>Pediction Graph</h2>
+        <div class="border-top pt-5">
+            <div class="row">
+                <div class="col-md-8">
+                    <div class="graph-group">
+                        <img id="imgGraph" src="{% url 'graph-prediction-png' %}?areaid={{ areaid }}&year={{ year }}" alt="Meter graph"/>
+                        <div id="loadingMask" class="loading-mask">
+                            <img src="{% static 'img/loading.gif' %}" alt="loading" />
+                        </div>
+                    </div>
+                </div>
+                <div>
+                    <form id="frmGraphFilter" action="{% url 'graph-prediction' %}" method="GET" class="form" onsubmit="return showFilterGraph(event);" >
+                        <div class="form-group">
+                            <label for="areaid">Area Id:</label>
+                            <input type="text" id="areaid" name="areaid" class="form-control" value="{{ areaid }}" required="required" />
+                        </div>
+                        <div class="form-group">
+                            <label for="year">Year:</label>
+                            <input type="text" id="year" name="year" class="form-control" value="{{ year }}" placeholder="2017"/>
+                        </div>
+                        <div class="form-group" style="text-align: right">
+                            <input type="submit" value="Show Graph" class="btn btn-primary" >
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock content %}
+
+{% block bodyscript %}
+    <script type="text/javascript">
+        var graphUrl = "{% url 'graph-prediction' %}";
+        var imageUrl = "{% url 'graph-prediction-png' %}";
+
+        $(document).ready(function() {
+            showLoading(true);
+        }) ;
+
+        $("#imgGraph").on("load", function() {
+            showLoading(false);
+        });
+
+        function showFilterGraph(e) {
+            var evt = e || event;
+            if (evt) {
+                evt.preventDefault();
+            }
+            var frm = document.getElementById("frmGraphFilter");
+            if (!frm && !frm.areaid) return;
+            var areaid = frm.areaid.value;
+            var year = frm.year.value;
+            showLoading(true);
+            loadGraph(areaid, year);
+
+            return false;
+        }
+
+        function loadGraph(areaid, year) {
+            var newUrl = graphUrl + "?areaid=" + areaid;
+            var newImageUrl = imageUrl + "?areaid=" + areaid;
+            if (year) {
+                newUrl += "&year=" + year;
+                newImageUrl += "&year=" + year;
+            }
+
+            var img = document.getElementById("imgGraph");
+            img.src = newImageUrl;
+
+            if (window.history.replaceState) {
+                window.history.replaceState('', '', newUrl);
+            }
+        }
+
+        function showLoading(show) {
+            var loading = document.getElementById("loadingMask");
+            if (!loading) return;
+            if (show) {
+                $(loading).css("display", "block");
+            } else {
+                $(loading).css("display", "none");
+            }
+        }
+
+    </script>
+{% endblock bodyscript %}
