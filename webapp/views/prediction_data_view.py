@@ -26,15 +26,14 @@ class PredictionView(ListView):
         if self.requestUrl['areaId'] and self.requestUrl['areaId'] != 0:
             try:
                 area_id = self.requestUrl['areaId']
-                print('area id =' + area_id)
                 data = data.filter(AreaId=area_id)
             except ValueError:
                 pass
 
-        if self.requestUrl['year'] and self.requestUrl['year'] != '':
+        if self.requestUrl['year'] and self.requestUrl['year'] != '' and len(self.requestUrl['year']) == 4:
             try:
                 year = self.requestUrl['year']
-                data = data.filter(prediction_date__gte=year)
+                data = data.filter(prediction_date__year__gte=year)
             except (ValueError, TypeError):
                 pass
 
