@@ -6,8 +6,6 @@
 - This file will operate monthly at the end of month, eg. 31 January at 11:59PM
 - This will insert to table: month_data
 """
-import sys# testing
-
 import connectToDatabase as connect
 import pandas as pd
 from datetime import datetime
@@ -15,9 +13,8 @@ import logging
 
 TABLE_NAME_DATA_MONTH = "month_data"
 # MONTH = datetime.today().month -1
-MONTH = datetime.today().month -2
+MONTH = datetime.today().month - 2
 YEAR = datetime.today().year
-
 
 
 """"
@@ -38,13 +35,11 @@ def get_meter_data(meter_id_in, meter_data_in, mydb_connection):
     meter_data_in['ReadAt'] = pd.to_datetime(meter_data_in['ReadAt'])
     meter_data_in.rename(columns={'ReadAt': 'usage_date'}, inplace=True)
     meter_data_in.set_index('usage_date', inplace=True)
-
     meter_data_in['KWH'] = pd.to_numeric(meter_data_in['KWH'])
     meter_data_in.interpolate(method='linear', inplace=True)
     meter_data_diff = meter_data_in.diff()
     data_in_month = meter_data_diff.resample('M').sum()
     data_in_month['MeterId'] = int(meter_id_in)
-    print(data_in_month)
     connect.insert_to_database(data_in_month, mydb_connection, TABLE_NAME_DATA_MONTH)
 
 
@@ -60,10 +55,7 @@ if __name__ == "__main__":
                                        "GROUP BY ReadAt, YEAR(ReadAt), MONTH(ReadAt), DAY(ReadAt)".format(meter_id,
                                                                                                           YEAR, MONTH)
             meter_data = connect.read_from_database(sql_query_get_meter_data, mydb_sqlalchemy)
-
             print(meter_data)
-
-
             get_meter_data(meter_id, meter_data, mydb_sqlalchemy)
         except Exception as err:
             logging.basicConfig(filename="Error_at_resample_data_log.log", filemode='w',

@@ -1,19 +1,13 @@
 import logging
-import sys
-from itertools import product
 import numpy as np
 import pandas as pd
 from dateutil.relativedelta import relativedelta
-from statsmodels.tsa.arima_model import ARIMA
 import connectToDatabase as connect
 from datetime import datetime
 import pmdarima as pm
-import time
 import warnings
 
-
 warnings.filterwarnings('ignore')
-
 
 # --------- Configuration ---------
 """"
@@ -30,9 +24,8 @@ MAX_q = 40
 M = 12
 TODAY = datetime.today()
 TABLE_NAME = "prediction_table"
-
-
 # --------- End Configuration ---------
+
 
 def get_service_area_id(mydb_connection):
     sql_query_get_area_id = "Select AreaId from ServiceArea"
