@@ -17,7 +17,7 @@ class MeterDataView(ListView):
 
     @method_decorator(login_required)
     def dispatch(self, request, *args, **kwargs):
-        self.requestUrl['meterId'] = self.request.GET.get('meterId', 0)
+        self.requestUrl['meterId'] = self.request.GET.get('meterId', '')
         self.requestUrl['fromDate'] = self.request.GET.get('fromDate', '')
         self.requestUrl['toDate'] = self.request.GET.get('toDate', '')
         return super().dispatch(request, *args, **kwargs)
