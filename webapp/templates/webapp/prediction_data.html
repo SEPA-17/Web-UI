@@ -10,7 +10,7 @@
                     <div class="form-row">
                         <div class="form-group col-md-6">
                             <div class="col-md-4 text-md-right">
-                                <label>Area Id:</label>
+                                <label for="areaId">Area Id:</label>
                             </div>
                             <div class="form-group col-md-8">
                                 <input type="text" class="form-control" name="areaId" id="areaId" value="{{ areaId }}" />
@@ -19,7 +19,7 @@
                         <div class="form-group col-md-6">
                             <div class="form-group">
                                 <div class="col-md-4 text-md-right">
-                                    <label>Year:</label>
+                                    <label for="year">Year:</label>
                                 </div>
                                 <div class="form-group col-md-8">
                                     <input type="text" class="form-control" name="year" id="year" value="{{ year }}" />
@@ -42,6 +42,8 @@
             <th scope="col">Area Id</th>
             <th scope="col">Prediction Date</th>
             <th scope="col">KWH</th>
+            <th scope="col">MIN KWH</th>
+            <th scope="col">MAX KWH</th>
             <th scope="col">Predicted At</th>
             <th scope="col"></th>
         </tr>
@@ -52,6 +54,8 @@
             <td>{{ data.AreaId_id }} - {{ data.AreaId }}</td>
             <td>{{ data.prediction_date|date:"m/Y" }}</td>
             <td>{{ data.kwh|stringformat:".2f" }}</td>
+            <td>{{ data.minimum_KWH|stringformat:".2f" }}</td>
+            <td>{{ data.maximum_KWH|stringformat:".2f" }}</td>
             <td>{{ data.predicted_at|date:"d/m/Y H:i:s" }}</td>
             <td><a href="{% url 'graph-prediction' %}?areaid={{data.AreaId_id}}&year={{data.prediction_date|date:'Y'}}" title="Display Graph">
                 <img src="{% static 'img/icon-graph.png' %}" title="view graph" style="width: 24px; height: 24px"/>

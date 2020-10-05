@@ -14,7 +14,7 @@ from webapp.models import PredictionData
 def prediction(request):
     _area_id = request.GET.get('areaid', 0)
     _year = request.GET.get('year', 2017)
-    print(f"Request meter id={_area_id}  year={_year}")
+
     return render(request, 'webapp/graph/prediction.html', {'areaid': _area_id, 'year': _year})
 
 
@@ -36,14 +36,20 @@ def prediction_png(request):
     if not data:
         return graph_not_found()
 
-    month_kw = data.values_list('prediction_date', 'kwh')
+    print('test')
+    month_data = data.values_list('prediction_date', 'kwh', 'minimum_KWH', 'maximum_KWH')
+
     months = (1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12)
-    monthly_usage = get_prediction(month_kw)
+    monthly_usage = get_prediction(month_data)
+    minimum_usage = get_prediction_min(month_data)
+    maximum_usage = get_prediction_max(month_data)
 
     fig = Figure()
     ax = fig.add_subplot()
 
-    ax.plot(months, monthly_usage, marker='.', color='#2fa4e7', label='Usage')
+    ax.plot(months, monthly_usage, marker='.', color='#2fa4e7', label='Usage', linewidth=2.0)
+    ax.plot(minimum_usage, color='#7ec4ed', label='Minimum', linewidth=1.0)
+    ax.plot(maximum_usage, color='#1b597d', label='Maximum', linewidth=1.0)
     ax.set_xlim(1, 12)
     ax.set_xlabel('Months')
     ax.set_ylabel('KW')
@@ -69,12 +75,33 @@ def graph_not_found():
 
 
 def get_prediction(values):
-    print(values)
     # 12 months result
     result = [0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00]
     for x in range(0, 12):
         for v in values:
             month = x + 1
             if month == v[0].month:
-                result[x] = v[1]
+                result[x] = v[1]  # kwh
+    return result
+
+
+def get_prediction_min(values):
+    # 12 months result
+    result = [0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00]
+    for x in range(0, 12):
+        for v in values:
+            month = x + 1
+            if month == v[0].month:
+                result[x] = v[2]  # min kwh
+    return result
+
+
+def get_prediction_max(values):
+    # 12 months result
+    result = [0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00]
+    for x in range(0, 12):
+        for v in values:
+            month = x + 1
+            if month == v[0].month:
+                result[x] = v[3]  # max kwh
     return result

@@ -24,7 +24,7 @@ class DataUsageView(ListView):
         return super().dispatch(request, *args, **kwargs)
 
     def get_queryset(self):
-        data = self.model.objects.all()
+        data = self.model.objects.only('meter_id', 'read_month', 'read_year', 'min_kwh', 'max_kwh', 'total_usage')
 
         # Filters
         if self.requestUrl['meterId'] != 0:
