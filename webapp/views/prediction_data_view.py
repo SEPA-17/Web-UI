@@ -15,7 +15,7 @@ class PredictionView(ListView):
 
     @method_decorator(login_required)
     def dispatch(self, request, *args, **kwargs):
-        self.requestUrl['areaId'] = self.request.GET.get('areaId', 0)
+        self.requestUrl['areaId'] = self.request.GET.get('areaId', '')
         self.requestUrl['year'] = self.request.GET.get('year', '')
         return super().dispatch(request, *args, **kwargs)
 

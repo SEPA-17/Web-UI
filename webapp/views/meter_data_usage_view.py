@@ -16,7 +16,7 @@ class DataUsageView(ListView):
 
     @method_decorator(login_required)
     def dispatch(self, request, *args, **kwargs):
-        self.requestUrl['meterId'] = self.request.GET.get('meterId', 0)
+        self.requestUrl['meterId'] = self.request.GET.get('meterId', '')
         self.requestUrl['fromMonth'] = self.request.GET.get('fromMonth', '0')
         self.requestUrl['fromYear'] = self.request.GET.get('fromYear', '0')
         self.requestUrl['toMonth'] = self.request.GET.get('toMonth', 0)
