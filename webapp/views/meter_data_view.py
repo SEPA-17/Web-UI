@@ -17,13 +17,13 @@ class MeterDataView(ListView):
 
     @method_decorator(login_required)
     def dispatch(self, request, *args, **kwargs):
-        self.requestUrl['meterId'] = self.request.GET.get('meterId', '')
+        self.requestUrl['meterId'] = self.request.GET.get('meterId', 0)
         self.requestUrl['fromDate'] = self.request.GET.get('fromDate', '')
         self.requestUrl['toDate'] = self.request.GET.get('toDate', '')
         return super().dispatch(request, *args, **kwargs)
 
     def get_queryset(self):
-        data = self.model.objects.all()
+        data = self.model.objects.only('MeterId', 'ReadAt', 'KWH', 'KW', 'KVA', 'KVAr', 'Ph1i', 'Ph2i', 'Ph3i', 'Ph1v', 'Ph2v', 'Ph3v', 'PF')
 
         if self.requestUrl['meterId'] != 0:
             try:
@@ -47,7 +47,8 @@ class MeterDataView(ListView):
             except (ValueError, TypeError):
                 pass
 
-        return data.order_by('-ReadAt')
+        data = data.order_by('-ReadAt')
+        return data
 
     def get_context_data(self, **kwargs):
         context = super(MeterDataView, self).get_context_data(**kwargs)

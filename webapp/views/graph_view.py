@@ -34,7 +34,7 @@ def monthly_png(request):
 
     # print(f"Request meter id={_meter_id}  year={_year}")
 
-    data = MeterUsage.objects.filter(meter_id=_meter_id, read_year=_year).order_by('read_year', 'read_month')
+    data = MeterUsage.objects.only('meter_id', 'read_month', 'read_year', 'total_usage').filter(meter_id=_meter_id, read_year=_year).order_by('read_year', 'read_month')
     if not data:
         return graph_not_found()
 

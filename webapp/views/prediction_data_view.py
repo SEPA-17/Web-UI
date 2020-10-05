@@ -20,7 +20,7 @@ class PredictionView(ListView):
         return super().dispatch(request, *args, **kwargs)
 
     def get_queryset(self):
-        data = self.model.objects.all()
+        data = self.model.objects
 
         # Filters
         if self.requestUrl['areaId'] and self.requestUrl['areaId'] != 0:
