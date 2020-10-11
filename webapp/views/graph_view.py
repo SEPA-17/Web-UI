@@ -22,7 +22,7 @@ def monthly(request):
 
 # Render monthly image
 def monthly_png(request):
-    # time.sleep(3)
+    #time.sleep(3)
 
     _meter_id = 0
     if request.GET.get('meterId'):

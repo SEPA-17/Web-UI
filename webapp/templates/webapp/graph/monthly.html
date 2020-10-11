@@ -7,7 +7,7 @@
             <div class="row">
                 <div class="col-md-8">
                     <div class="graph-group">
-                        <img id="imgGraph" src="{% url 'graph-monthly-png' %}?meterId={{ meterid }}&year={{ year }}" alt="Meter graph"/>
+                        <img id="imgGraph" src="{% static 'img/icon-graph.png' %}" alt="Meter graph"/>
                         <div id="loadingMask" class="loading-mask">
                             <img src="{% static 'img/loading.gif' %}" alt="loading" />
                         </div>
@@ -38,14 +38,6 @@
         var graphUrl = "{% url 'graph-monthly' %}";
         var imageUrl = "{% url 'graph-monthly-png' %}";
 
-        $(document).ready(function() {
-            showLoading(true);
-        }) ;
-
-        $("#imgGraph").on("load", function() {
-            showLoading(false);
-        });
-
         function showFilterGraph(e) {
             var evt = e || event;
             if (evt) {
@@ -70,7 +62,7 @@
             }
 
             var img = document.getElementById("imgGraph");
-            img.src = newImageUrl;
+            img.src = newImageUrl + "&random=" +new Date().getTime();
 
             if (window.history.replaceState) {
                 window.history.replaceState('', '', newUrl);
@@ -78,14 +70,26 @@
         }
 
         function showLoading(show) {
-            var loading = document.getElementById("loadingMask");
-            if (!loading) return;
+            var loadingMask = document.getElementById("loadingMask");
+            if (!loadingMask) return;
             if (show) {
-                $(loading).css("display", "block");
+                $(loadingMask).css("display", "block");
             } else {
-                $(loading).css("display", "none");
+                $(loadingMask).css("display", "none");
             }
         }
+
+        // handle image loaded
+        var imgGraph = document.getElementById("imgGraph");
+        imgGraph.addEventListener("load", function(){
+            showLoading(false);
+        });
+
+        // Load graph
+        window.addEventListener('load', (event) => {
+            showLoading(true);
+            loadGraph({{ meterid }}, {{ year }});
+        });
 
     </script>
 {% endblock bodyscript %}

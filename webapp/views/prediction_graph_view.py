@@ -37,7 +37,7 @@ def prediction_png(request):
         return graph_not_found()
 
     print('test')
-    month_data = data.values_list('prediction_date', 'kwh', 'minimum_KWH', 'maximum_KWH')
+    month_data = data.values_list('prediction_date', 'KWH', 'minimum_KWH', 'maximum_KWH')
 
     months = (1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12)
     monthly_usage = get_prediction(month_data)
