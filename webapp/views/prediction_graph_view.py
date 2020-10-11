@@ -30,13 +30,10 @@ def prediction_png(request):
 
     _year = request.GET.get('year', 2017)
 
-    print(f"Request area id={_area_id}  year={_year}")
-
     data = PredictionData.objects.filter(AreaId_id=_area_id, prediction_date__year=_year).order_by('prediction_date', 'AreaId_id')
     if not data:
         return graph_not_found()
 
-    print('test')
     month_data = data.values_list('prediction_date', 'KWH', 'minimum_KWH', 'maximum_KWH')
 
     months = (1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12)
@@ -55,7 +52,7 @@ def prediction_png(request):
     ax.set_ylabel('KW')
     ax.set_title("Prediction KW")
     ax.grid()
-    ax.legend(loc="upper right", shadow=True, bbox_to_anchor=(1, 1.075))
+    ax.legend()
     canvas = FigureCanvas(fig)
 
     buf = io.BytesIO()
