@@ -1,0 +1,1 @@
+*/5 * * * * root /usr/local/bin/myscript.sh > /dev/null
