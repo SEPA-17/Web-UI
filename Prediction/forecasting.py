@@ -22,7 +22,7 @@ MAX_p = 50
 MAX_d = 20
 MAX_q = 40
 M = 12
-TODAY = datetime.today()
+START_OF_PROGRAM = datetime.today()
 TABLE_NAME = "prediction_table"
 # --------- End Configuration ---------
 
@@ -83,6 +83,12 @@ def reform_predicted_data(metadata, result_data_in, conf_int_in):
     return future_meter_data
 
 
+def remove_old_prediction_data(mydb_connection, areaID):
+    sql_query_remove_old_prediction = "Delete from {0} where AreaId = {1}".format(TABLE_NAME, areaID)
+    conn = mydb_connection.connect()
+    conn.execute(sql_query_remove_old_prediction)
+
+
 if __name__ == "__main__":
     try:
         mydb_sqlalchemy = connect.database_connection_with_sqlalchemy()
@@ -97,7 +103,8 @@ if __name__ == "__main__":
             future_data = reform_predicted_data(meter_data_log, result_data, conf_int)
 
             future_data['AreaId'] = areaId
-            future_data['predicted_at'] = TODAY
+            future_data['predicted_at'] = datetime.today()
+            remove_old_prediction_data(mydb_sqlalchemy, areaId)
             connect.insert_to_database(future_data, mydb_sqlalchemy, TABLE_NAME)
     except Exception as err:
         logging.basicConfig(filename="Error_at_forecasting_log.log", filemode='w', format='%(asctime)s - %(levelname)s - %(message)s')
