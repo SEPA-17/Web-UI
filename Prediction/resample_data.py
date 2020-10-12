@@ -12,8 +12,8 @@ from datetime import datetime
 import logging
 
 TABLE_NAME_DATA_MONTH = "month_data"
-# MONTH = datetime.today().month -1
-MONTH = datetime.today().month - 2
+# MONTH = datetime.today().month - 1
+MONTH = datetime.today().month - 2  # For Testing only, final deployment is -1
 YEAR = datetime.today().year
 
 
@@ -58,7 +58,7 @@ if __name__ == "__main__":
             print(meter_data)
             get_meter_data(meter_id, meter_data, mydb_sqlalchemy)
         except Exception as err:
-            logging.basicConfig(filename="Error_at_resample_data_log.log", filemode='w',
+            logging.basicConfig(filename="Error_at_resample_data_log.log", filemode='a',
                                 format='%(asctime)s - %(levelname)s - %(message)s')
             logging.error("Type {0} occurred. Arguments:\n{1!r}".format(type(err).__name__, err.args))
 

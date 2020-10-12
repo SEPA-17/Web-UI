@@ -22,7 +22,6 @@ MAX_p = 50
 MAX_d = 20
 MAX_q = 40
 M = 12
-START_OF_PROGRAM = datetime.today()
 TABLE_NAME = "prediction_table"
 # --------- End Configuration ---------
 
@@ -107,6 +106,6 @@ if __name__ == "__main__":
             remove_old_prediction_data(mydb_sqlalchemy, areaId)
             connect.insert_to_database(future_data, mydb_sqlalchemy, TABLE_NAME)
     except Exception as err:
-        logging.basicConfig(filename="Error_at_forecasting_log.log", filemode='w', format='%(asctime)s - %(levelname)s - %(message)s')
+        logging.basicConfig(filename="Error_at_forecasting_log.log", filemode='a', format='%(asctime)s - %(levelname)s - %(message)s')
         logging.error("Type {0} occurred. Arguments:\n{1!r}".format(type(err).__name__, err.args))
 
