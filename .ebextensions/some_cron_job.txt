@@ -1,2 +1,2 @@
-*/2 * * * * root /usr/local/bin/myscript.sh >> /var/log/myscript.log 2>&1
+0 0 1 * * root /usr/local/bin/myscript.sh >> /var/log/myscript.log 2>&1
 
