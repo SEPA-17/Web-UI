@@ -53,7 +53,8 @@ def monthly_png(request):
     ax.set_ylabel('KW')
     ax.set_title("Zodicom KW")
     ax.grid()
-    ax.legend(loc="upper right", shadow=True, bbox_to_anchor=(1, 1.075))
+    #ax.legend(loc="upper right", shadow=True, bbox_to_anchor=(1, 1.075))
+    ax.legend()
     canvas = FigureCanvas(fig)
 
     buf = io.BytesIO()
