@@ -45,7 +45,7 @@ def prediction_png(request):
     ax = fig.add_subplot()
 
     ax.plot(months, minimum_usage, color='#7ec4ed', label='Minimum', linewidth=1.0)
-    ax.plot(months, monthly_usage, marker='.', color='#2fa4e7', label='Usage', linewidth=2.0)
+    ax.plot(months, monthly_usage, marker='.', color='#2fa4e7', label='Predicted Usage', linewidth=2.0)
     ax.plot(months, maximum_usage, color='#1b597d', label='Maximum', linewidth=1.0)
     ax.set_xlim(1, 12)
     ax.set_xlabel('Months')
