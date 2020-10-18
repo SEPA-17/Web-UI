@@ -22,7 +22,7 @@
                         </div>
                         <div class="form-group col-md-5">
                             <div class="input-group date" id="fromDateTimePicker" data-target-input="nearest">
-                                <input type="text" class="form-control datetimepicker-input" data-target="#fromDateTimePicker" id="fromDate" name="fromDate" placeholder="From MM/YYYY" value="{{ fromDate }}"/>
+                                <input type="text" class="form-control datetimepicker-input" data-target="#fromDateTimePicker" id="fromDate" name="fromDate" placeholder="From DD/MM/YYYY" value="{{ fromDate }}"/>
                                 <div class="input-group-append" data-target="#fromDateTimePicker" data-toggle="datetimepicker">
                                     <div class="input-group-text"><i class="fa fa-calendar"></i></div>
                                 </div>
@@ -30,7 +30,7 @@
                         </div>
                         <div class="form-group col-md-5">
                             <div class="input-group date" id="toDateTimePicker" data-target-input="nearest">
-                                <input type="text" class="form-control datetimepicker-input" data-target="#toDateTimePicker" id="toDate" name="toDate" placeholder="To MM/YYYY" value="{{ toDate }}"/>
+                                <input type="text" class="form-control datetimepicker-input" data-target="#toDateTimePicker" id="toDate" name="toDate" placeholder="To DD/MM/YYYY" value="{{ toDate }}"/>
                                 <div class="input-group-append" data-target="#toDateTimePicker" data-toggle="datetimepicker">
                                     <div class="input-group-text"><i class="fa fa-calendar"></i></div>
                                 </div>
@@ -79,7 +79,7 @@
             <td>{{ data.Ph1v|stringformat:".3f" }}</td>
             <td>{{ data.Ph2v|stringformat:".3f" }}</td>
             <td>{{ data.Ph3v|stringformat:".3f" }}</td>
-            <td>{{ data.PF }}</td>
+            <td>{{ data.PF|stringformat:".3f" }}</td>
         </tr>
         {% empty %}
             <tr><td colspan="15">No result found</td></tr>
