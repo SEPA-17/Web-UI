@@ -3,7 +3,8 @@
 {% block content %}
 <div class="content-section">
     <h2>Data Usage</h2>
-    <div class="border-top pt-5">
+    <br/>
+    <div class="border-top bg-secondary pt-5">
         <form action="{% url 'data-usage' %}" method="GET">
             <div class="form-row row">
                 <div class="col-sm-12 col-md-3">
@@ -73,7 +74,7 @@
             <input type="hidden" name="page" value="1">
         </form>
     </div>
-
+    <br/>
     <table class="table table-hover">
         <thead class="thead-light">
         <tr>

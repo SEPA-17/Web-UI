@@ -3,34 +3,45 @@
 {% block content %}
     <div class="content-section">
         <h2>Data Usage</h2>
-        <div class="border-top pt-5">
-            <div class="row">
-                <div class="col-md-8">
-                    <div class="graph-group">
-                        <img id="imgGraph" src="{% static 'img/icon-graph.png' %}" alt="Meter graph"/>
-                        <div id="loadingMask" class="loading-mask">
-                            <img src="{% static 'img/loading.gif' %}" alt="loading" />
-                        </div>
-                    </div>
-                </div>
-                <div>
-                    <form id="frmGraphFilter" action="{% url 'graph-monthly' %}" method="GET" class="form" onsubmit="return showFilterGraph(event);" >
-                        <div class="form-group">
-                            <label for="meterId">Meter Id:</label>
+        <br/>
+        <div class="border-top bg-secondary pt-5">
+            <form id="frmGraphFilter" action="{% url 'graph-monthly' %}" method="GET" class="form" onsubmit="return showFilterGraph(event);" >
+                <div class="form-row row">
+                    <div class="form-group col-md-2">&nbsp;</div>
+                    <div class="form-group col-md-3">
+                         <div class="input-group">
+                             <div class="input-group-prepend">
+                                <label class="input-group-text" for="meterId">Meter Id:</label>
+                             </div>
                             <input type="text" id="meterId" name="meterId" class="form-control" value="{{ meterid }}" required="required" />
                         </div>
-                        <div class="form-group">
-                            <label for="year">Year:</label>
+                    </div>
+                    <div class="form-group col-md-3">
+                        <div class="input-group">
+                            <div class="input-group-prepend">
+                                <label class="input-group-text" for="year">Year:</label>
+                            </div>
                             <input type="text" id="year" name="year" class="form-control" value="{{ year }}" placeholder="2017"/>
                         </div>
-                        <div class="form-group" style="text-align: right">
-                            <input type="submit" value="Show Graph" class="btn btn-primary" >
-                        </div>
-                    </form>
+                    </div>
+                    <div class="form-group col-md-2">
+                       <input type="submit" value="Show Graph" class="btn btn-primary" >
+                    </div>
+                    <div class="form-group col-md-2">&nbsp;</div>
+                </div>
+            </form>
+        </div>
+        <br/>
+        <div>
+            <div class="graph-group">
+                <img id="imgGraph" src="{% static 'img/icon-graph.png' %}" alt="Meter graph"/>
+                <div id="loadingMask" class="loading-mask">
+                    <img src="{% static 'img/loading.gif' %}" alt="loading" />
                 </div>
             </div>
         </div>
     </div>
+    <br/>
 {% endblock content %}
 
 {% block bodyscript %}
